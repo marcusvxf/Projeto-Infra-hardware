@@ -1,21 +1,7 @@
 module cpu_add(
     input wire clk,
     input wire reset
-
-
-
 );
-
-
-// declarar todas as partes do processador 
-// 1) Criar o PC
-// instancia o registrador 
-
-
-
-// PARTES DA ULA 
-
-// FLAGS 
 
     wire    Of;
     wire    Ng;
@@ -71,6 +57,7 @@ module cpu_add(
 
    
     wire AB_w; // contrle de escrita de A e B ao mesmo tempo
+    wire RB_w; // controle de escrita do banco de registradores, pra ler os dados e passar pra A e B
     
 
 
@@ -218,6 +205,7 @@ module cpu_add(
         M_ULAB,
         B_out,
         SXTND_out,
+        1'b0,
         ULAB_in
     );
 
@@ -247,27 +235,19 @@ module cpu_add(
         Lt, // menor
         // fim   
         OPCODE, // opcode
-        funct,
         // sinais de controle pra todos os muxs e todas as unidades do controle
         PC_w, 
         MEM_w,
         IR_w,
         Reg_w,
         AB_w,
+        RB_w,
+        //
         ULA_c,
         M_WREG,
         M_ULAA,
         M_ULAB,
-        aluOut_w,
-        MemRead,
-        ALUSrcA,
-        ALUSrcB,
-        ALU_flag,
-        RegDst,
-        PC_source,
-        ALU_op,
-        i_or_d,
-        MemtoReg,
+
         // reset de saida
         reset
     );

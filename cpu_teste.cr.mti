@@ -1,8 +1,105 @@
-{D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v}
+{D:/downloads/Componentes do Projeto/new_components/cpu_add.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu_add.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu_add
+
+Top level modules:
+	cpu_add
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Instr_Reg
+-- Compiling architecture behavioral_arch of Instr_Reg
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/ula32.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/ula32.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Ula32
+-- Compiling architecture behavioral of Ula32
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Banco_reg
+-- Compiling architecture behavioral_arch of Banco_reg
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity RegDesloc
+-- Compiling architecture behavioral_arch of RegDesloc
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module mux_ulaA
 
 Top level modules:
 	mux_ulaA
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_ulaB
+
+Top level modules:
+	mux_ulaB
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module sign_xtend_16_32
+
+Top level modules:
+	sign_xtend_16_32
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Compiling package ram_constants
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package LPM_COMPONENTS
+-- Loading package ram_constants
+-- Compiling entity Memoria
+-- Compiling architecture behavioral_arch of Memoria
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/Registrador.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Registrador.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Registrador
+-- Compiling architecture behavioral_arch of Registrador
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_regDst.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_regDst.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_regDst
+
+Top level modules:
+	mux_regDst
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ctrl_unit
+
+Top level modules:
+	ctrl_unit
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_PcSource
+
+Top level modules:
+	mux_PcSource
 
 } {} {}}
