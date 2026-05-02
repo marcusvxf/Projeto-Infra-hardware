@@ -1,0 +1,8 @@
+{D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_ulaA
+
+Top level modules:
+	mux_ulaA
+
+} {} {}}

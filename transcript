@@ -1,0 +1,53 @@
+# Compile of mux_ulaA.v was successful.
+# Compile of mux_ulaB.v was successful.
+vsim -gui work.mux_ulaB
+# vsim -gui work.mux_ulaB 
+# Start time: 11:07:13 on May 02,2026
+# Loading work.mux_ulaB
+add wave -position insertpoint  \
+sim:/mux_ulaB/selector \
+sim:/mux_ulaB/Data_0 \
+sim:/mux_ulaB/Data_1 \
+sim:/mux_ulaB/Data_2 \
+sim:/mux_ulaB/Data_out
+force -freeze sim:/mux_ulaB/selector 00 0
+force -freeze sim:/mux_ulaB/selector 00 0
+force -freeze sim:/mux_ulaB/Data_0 0110 0
+force -freeze sim:/mux_ulaB/Data_1 00000000000000000000000000000111 0
+force -freeze sim:/mux_ulaB/Data_2 00000000000000000000000000000100 0
+run
+force -freeze sim:/mux_ulaB/selector 01 0
+run
+# Break key hit
+force -freeze sim:/mux_ulaB/selector 01 0
+run
+# Break key hit
+run
+run
+run
+run
+run
+run
+force -freeze sim:/mux_ulaB/selector 10 0
+run
+# Compile of mux_ulaB.v was successful.
+# Compile of mux_ulaB.v was successful.
+run
+force -freeze sim:/mux_ulaB/selector 10 0
+run
+# Compile of Banco_reg.vhd was successful.
+# Compile of Instr_Reg.vhd was successful.
+# Compile of Memoria.vhd was successful.
+# Compile of RegDesloc.vhd was successful.
+# Compile of Registrador.vhd was successful.
+# Compile of ula32.vhd was successful.
+# Compile of cpu_add.v was successful.
+# Compile of ctrl_unit.v failed with 2 errors.
+# Compile of mux_pcSource.v was successful.
+# Compile of mux_regDst.v was successful.
+# Compile of mux_ulaA.v was successful.
+# Compile of mux_ulaB.v was successful.
+# Compile of sign_xtend_16_32.v was successful.
+# 13 compiles, 1 failed with 2 errors.
+# Compile of ctrl_unit.v failed with 2 errors.
+# Compile of ctrl_unit.v failed with 2 errors.
