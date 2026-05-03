@@ -33,6 +33,7 @@ module cpu_add(
     wire        M_WREG; // sinal de controle do mux 3 
     wire        M_ULAA;
     wire [1:0]  M_ULAB;
+    wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
 
 
 // Partes da instrucao necessarias  
@@ -46,27 +47,18 @@ module cpu_add(
     wire [4:0] WRITEREG_in; // variavel do mux 3 
 
 
-// Fio de dados com 32 bits
-
-
-
-
-// FIM PARTES DA ULA 
     // DECLARAR OS SINAIS DE CONTROLE
     // Control wires 
 
-   
+
+
     wire AB_w; // contrle de escrita de A e B ao mesmo tempo
     wire RB_w; // controle de escrita do banco de registradores, pra ler os dados e passar pra A e B
     
 
-
-
     // DECLARAR OS PC_w, ULA_out, PC_out 
   
     // Data_wires - fio de dados / sinais de dados
-
-        
     wire [31:0] ULA_out;
    
     wire [31:0] PC_out;
@@ -79,6 +71,8 @@ module cpu_add(
     wire [31:0] SXTND_out;
     wire [31:0] ULAA_in;
     wire [31:0] ULAB_in;
+
+    wire [31:0] BREG_WRITE_DATA_IN; 
     
     
     // novas
@@ -100,8 +94,54 @@ module cpu_add(
 
     wire [7:0] MemtoReg;
 
+    mux_regDst M_REG_(
+        M_WREG,
+        RT, // primeira entrada
+        OFFSET, // segunda entrada 
+        WRITEREG_in // a saida dele 
+    );
 
 
+    mux_mem_to_reg M_MEM_TO_REG_(
+        MEM_TO_REG_Selector,
+        ULA_out, // Data 0
+        32'b0, // Data 1 - MDR - não tem na video aula
+        32'b0, // Data 2 - HI_out - não tem na video aula
+        32'b0, // Data 3 - LO_out - não tem na video aula
+        32'b0, // Data 4 - SHIFT_out - não tem na video aula
+        32'b0, // Data 5 - sign_ext_out_1->32 - não tem na video aula
+        32'b0, // Data 6 - sign_ext_out_16->32 - não tem na video aula
+        32'b0, // Data 7 - Merge Bytes Oute - não tem na video aula
+        BREG_WRITE_DATA_IN // a saida do mux que vai pro banco de registradores e pra A e B
+    );
+
+    mux_ulaA M_ULA_A_ (
+        M_ULAA,
+        PC_out,
+        A_out,
+        ULAA_in
+    );
+
+    mux_ulaB M_ULA_B_ (
+        M_ULAB,
+        B_out,
+        SXTND_out,
+        1'b0,
+        ULAB_in
+    );
+
+    ula32 ULA_(
+        ULAA_in,
+        ULAB_in,
+        ULA_c,
+        ULA_out,
+        Of,
+        Ng,
+        Zr,
+        Eq,
+        Gt,
+        Lt
+    );
 
     Registrador PC_ (
         clk, // clock - declarado no modulo
@@ -118,9 +158,6 @@ module cpu_add(
         
         MEM_w, // fio que diz se é escrita ou leitura - Wr  
 
-        //pra escrever na memoria temos que indicar um fio
-        // na video aula n temos instrucao que escreve na memoria, só LE
-        // o fio não é usado pra escrita na video aula
         ULA_out, // fio de entrada na memoria pra leitura.
         
         MEM_to_IR// o fio de saida da mem que vai pra ir 
@@ -140,19 +177,6 @@ module cpu_add(
 
     );
 
-    //Seguindo o fluxo, antes de instanciar o BReg temos que instanciar o mux 3, o writereg 
-
-    mux_regDst M_REG_(
-        M_WREG,
-        RT, // primeira entrada
-        OFFSET, // segunda entrada 
-        WRITEREG_in // a saida dele 
-
-        // Instancia tudo que não tá instanciado como variavel 
-    );
-
-    // Agora, vamos instanciar o banco de registradores 
-
     Banco_reg REG_BASE_(
         clk,
         reset,
@@ -161,9 +185,7 @@ module cpu_add(
         RT,// read reg 2 - rt     
         WRITEREG_in,// WriteReg
 
-        // o que vai ser escrito no banco de registradores, que no caso do processador da video aula é apenas o que sai da ULA
-
-        ULA_out, 
+        BREG_WRITE_DATA_IN, 
 
         // Agora, as saidas de a e b
         RB_to_A,
@@ -194,35 +216,6 @@ module cpu_add(
         SXTND_out
     );
 
-    mux_ulaA M_ULA_A_ (
-        M_ULAA,
-        PC_out,
-        A_out,
-        ULAA_in
-    );
-
-    mux_ulaB M_ULA_B_ (
-        M_ULAB,
-        B_out,
-        SXTND_out,
-        1'b0,
-        ULAB_in
-    );
-
-    ula32 ULA_(
-        ULAA_in,
-        ULAB_in,
-        ULA_c,
-        ULA_out,
-        Of,
-        Ng,
-        Zr,
-        Eq,
-        Gt,
-        Lt
-        
-    );
-
     ctrl_unit CTRL_(
         clk,
         reset,// reset de entrada
@@ -250,7 +243,8 @@ module cpu_add(
         M_ULAB,
 
         // reset de saida
-        reset
+        reset,
+        MEM_TO_REG_Selector
     );
 
     // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela

@@ -12,7 +12,6 @@ module ctrl_unit(
 
     input wire  [5:0]    OPCODE,
     input wire  [15:0]    OFFSET, // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
-
     // Controllers com 1 bit - W => WRITE
     output reg    PC_w, 
     output reg    MEM_w,
@@ -32,7 +31,9 @@ module ctrl_unit(
     output reg  [1:0]    M_ULAB,
 
     // Funciona de acordo com o Clock - sincronamente com o clock
-    output reg    rst_out
+    output reg    rst_out,
+
+    output reg [2:0] MEM_TO_REG_Selector // controle do mux mem to reg
 );
 
 // Variaveis
@@ -75,6 +76,7 @@ always @(posedge clk) begin
             M_ULAB = 2'b00;
             rst_out = 1'b1; // Sinal de reset para o processador
             COUNTER = 3'b000;
+            MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
         end
         else begin
             STATE = ST_COMMON; // Volta para o estado comum após o reset
@@ -90,6 +92,7 @@ always @(posedge clk) begin
             M_ULAB = 2'b00;
             rst_out = 1'b0; // Sinal de reset para o processador
             COUNTER = 3'b000;
+            MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
         end
     end else begin 
 
@@ -111,6 +114,7 @@ always @(posedge clk) begin
                     M_ULAB = 2'b01;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
+                    MEM_TO_REG_Selector = 3'b000;
 
                 end 
                 else if (COUNTER == 3'b011) begin
@@ -128,6 +132,7 @@ always @(posedge clk) begin
                     M_ULAB = 2'b01;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
+                    MEM_TO_REG_Selector = 3'b000;
 
                 end 
                 // PC e IR já foram atualizados, agora é hora de preparar os sinais de controle para a próxima instrução 
@@ -145,6 +150,7 @@ always @(posedge clk) begin
                     M_ULAB = 2'b00;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
+                    MEM_TO_REG_Selector = 3'b000;
                 end 
                 else if (COUNTER == 3'b101) begin
                     // Inicio das instruções
@@ -187,6 +193,8 @@ always @(posedge clk) begin
             // Estado de adição, add
             ST_ADD: begin
                 if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_ADD;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -200,9 +208,12 @@ always @(posedge clk) begin
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
                     COUNTER = COUNTER + 1;
+
                 end
 
                 else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_COMMON;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -216,10 +227,13 @@ always @(posedge clk) begin
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
+
                 end
             end
             ST_SUB: begin
                 if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_SUB;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -233,9 +247,12 @@ always @(posedge clk) begin
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
                     COUNTER = COUNTER + 1;
+
                 end
 
                 else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_COMMON;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -253,6 +270,8 @@ always @(posedge clk) begin
             end
             ST_AND: begin
                 if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_AND;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -269,6 +288,8 @@ always @(posedge clk) begin
                 end
 
                 else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_COMMON;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -287,6 +308,8 @@ always @(posedge clk) begin
             // Estado de adição imediata, addi
             ST_ADDI: begin
                 if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_ADDI;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
@@ -303,6 +326,8 @@ always @(posedge clk) begin
                 end
 
                 else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
                     STATE = ST_COMMON;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
