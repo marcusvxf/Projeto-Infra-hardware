@@ -46,6 +46,7 @@ parameter ST_ADD = 4'b0001;
 parameter ST_ADDI = 4'b0010;
 parameter ST_RESET = 4'b0011;
 parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
+parameter ST_AND = 4'b0101; // Novo estado para AND
 
 // Opcode
 parameter R_TYPE = 6'b000000;
@@ -156,6 +157,10 @@ always @(posedge clk) begin
                             else if (funct == 6'b100010) begin // Verifica se é a instrução SUB (funct = 34)
                                 STATE = ST_SUB;
                             end
+                            else if (funct == 6'b100100) begin // Verifica se é a instrução AND (funct = 36)
+                                STATE = ST_AND; // Implementar o estado de AND
+                            end
+
                         end
                         ADDI: begin
                             STATE = ST_ADDI;
@@ -239,6 +244,39 @@ always @(posedge clk) begin
                     AB_w = 1'b0;
                     RB_w = 1'b0;
                     ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
+                end
+            end
+            ST_AND: begin
+                if(COUNTER == 3'b000) begin
+                    STATE = ST_AND;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b1;
+                    ULA_c = 3'b011; // Controla a ULA para somar os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = COUNTER + 1;
+                end
+
+                else if(COUNTER == 3'b001) begin
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ULA_c = 3'b011; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
