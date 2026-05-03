@@ -48,6 +48,7 @@ parameter ST_ADDI = 4'b0010;
 parameter ST_RESET = 4'b0011;
 parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
 parameter ST_AND = 4'b0101; // Novo estado para AND
+parameter ST_JR = 4'b0110; // Novo estado para JR
 
 // Opcode
 parameter R_TYPE = 6'b000000;
@@ -165,6 +166,9 @@ always @(posedge clk) begin
                             end
                             else if (funct == 6'b100100) begin // Verifica se é a instrução AND (funct = 36)
                                 STATE = ST_AND; // Implementar o estado de AND
+                            end
+                            else if (funct == 6'b001000) begin // Verifica se é a instrução JR (funct = 8)
+                                STATE = ST_JR; // Implementar o estado de JR
                             end
 
                         end
@@ -298,6 +302,43 @@ always @(posedge clk) begin
                     AB_w = 1'b0;
                     RB_w = 1'b0;
                     ULA_c = 3'b011; // Controla a ULA para somar os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
+                end
+            end
+
+            // JR
+            ST_JR: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
+                    STATE = ST_JR;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;  
+                    ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = COUNTER + 1;
+
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b000;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;  
+                    ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
