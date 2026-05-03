@@ -1,4 +1,4 @@
-module cpu(
+module cpu_add(
     input wire clk,
     input wire reset
 );
@@ -235,7 +235,7 @@ module cpu(
         Lt, // menor
         // fim   
         OPCODE, // opcode
-        OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é
+        OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
         // sinais de controle pra todos os muxs e todas as unidades do controle
         PC_w, 
         MEM_w,

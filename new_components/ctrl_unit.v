@@ -11,6 +11,7 @@ module ctrl_unit(
     // ------------------------------------------
 
     input wire  [5:0]    OPCODE,
+    input wire  [15:0]    OFFSET, // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
 
     // Controllers com 1 bit - W => WRITE
     output reg    PC_w, 
@@ -35,17 +36,19 @@ module ctrl_unit(
 );
 
 // Variaveis
-reg [1:0] STATE = 2'b00; // estado da maquina de estados atualizar ao adicionar estados
+reg [3:0] STATE = 4'b0000; // estado da maquina de estados atualizar ao adicionar estados
 reg [2:0] COUNTER;
+reg [5:0] funct; // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
 
 // Estados principais da maquina 
-parameter ST_COMMON = 2'b00;
-parameter ST_ADD = 2'b01;
-parameter ST_ADDI = 2'b10;
-parameter ST_RESET = 2'b11;
+parameter ST_COMMON = 4'b0000;
+parameter ST_ADD = 4'b0001;
+parameter ST_ADDI = 4'b0010;
+parameter ST_RESET = 4'b0011;
+parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
 
 // Opcode
-parameter ADD = 6'b000000;
+parameter R_TYPE = 6'b000000;
 parameter ADDI = 6'b001000;
 parameter RESET = 6'b111111;
 
@@ -145,8 +148,14 @@ always @(posedge clk) begin
                 else if (COUNTER == 3'b101) begin
                     // Inicio das instruções
                     case (OPCODE)
-                        ADD: begin
-                            STATE = ST_ADD;
+                        R_TYPE: begin
+                            funct = OFFSET[5:0]; // Captura os 6 bits menos significativos do OFFSET como funct
+                            if (funct == 6'b100000) begin // Verifica se é a instrução ADD (funct = 32)
+                                STATE = ST_ADD;
+                            end
+                            else if (funct == 6'b100010) begin // Verifica se é a instrução SUB (funct = 34)
+                                STATE = ST_SUB;
+                            end
                         end
                         ADDI: begin
                             STATE = ST_ADDI;
@@ -197,6 +206,39 @@ always @(posedge clk) begin
                     AB_w = 1'b0;
                     RB_w = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
+                end
+            end
+            ST_SUB: begin
+                if(COUNTER == 3'b000) begin
+                    STATE = ST_SUB;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b1;    
+                    ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
+                    M_WREG = 1'b1; 
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    COUNTER = COUNTER + 1;
+                end
+
+                else if(COUNTER == 3'b001) begin
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
