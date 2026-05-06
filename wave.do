@@ -8,6 +8,13 @@ add wave -noupdate -radix decimal /cpu/REG_BASE_/Cluster(25)
 add wave -noupdate -radix unsigned /cpu/CTRL_/STATE
 add wave -noupdate -radix unsigned /cpu/CTRL_/COUNTER
 add wave -noupdate /cpu/CTRL_/funct
+add wave -noupdate -radix decimal /cpu/HI_out
+add wave -noupdate -radix decimal /cpu/LO_out
+add wave -noupdate /cpu/div_zero
+add wave -noupdate /cpu/CTRL_/HI_Write
+add wave -noupdate /cpu/CTRL_/LO_Write
+add wave -noupdate /cpu/CTRL_/HI_Control
+add wave -noupdate /cpu/CTRL_/LO_Control
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {0 ps} 0}
 quietly wave cursor active 0

@@ -12,7 +12,7 @@ module ctrl_unit(
 
     input wire  [5:0]    OPCODE,
     input wire  [15:0]    OFFSET, // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
-    input wire div_zero // exceção div por zero
+    input wire div_zero, // exceção div por zero
     // Controllers com 1 bit - W => WRITE
     output reg    PC_w, 
     output reg    MEM_w,
@@ -34,7 +34,7 @@ module ctrl_unit(
     // Funciona de acordo com o Clock - sincronamente com o clock
     output reg    rst_out,
 
-    output reg [2:0] MEM_TO_REG_Selector // controle do mux mem to reg
+    output reg [2:0] MEM_TO_REG_Selector, // controle do mux mem to reg
     // saidas mult/div
     output reg HI_Write,
     output reg LO_Write,
@@ -62,6 +62,10 @@ parameter ST_MFLO = 4'b1010;
 
 
 // Opcode
+parameter ADD   = 6'b100000;
+parameter SUB   = 6'b100010;
+parameter AND_OP = 6'b100100;
+parameter JR    = 6'b001000;
 parameter R_TYPE = 6'b000000;
 parameter ADDI = 6'b001000;
 parameter RESET = 6'b111111;
@@ -189,8 +193,6 @@ always @(posedge clk) begin
                                 STATE = ST_MFHI;
                             else if (funct == MFLO)
                                 STATE = ST_MFLO;
-                            end
-
                         end
                         ADDI: begin
                             STATE = ST_ADDI;

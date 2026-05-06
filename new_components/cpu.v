@@ -94,6 +94,14 @@ module cpu_add(
 
     wire [7:0] MemtoReg;
 
+    // Sinais para MULT, DIV, MFHI, MFLO
+    wire [31:0] mult_hi, mult_lo;
+    wire [31:0] div_hi, div_lo;
+    wire div_zero;
+    wire [31:0] HI_out, LO_out;
+    wire HI_Write, LO_Write, HI_Control, LO_Control;
+    wire rst_out;
+
     mux_regDst M_REG_(
         M_WREG,
         RT, // primeira entrada
@@ -104,15 +112,15 @@ module cpu_add(
 
     mux_mem_to_reg M_MEM_TO_REG_(
         MEM_TO_REG_Selector,
-        ULA_out, // Data 0
-        32'b0, // Data 1 - MDR - não tem na video aula
-        32'b0, // Data 2 - HI_out - não tem na video aula
-        32'b0, // Data 3 - LO_out - não tem na video aula
-        32'b0, // Data 4 - SHIFT_out - não tem na video aula
-        32'b0, // Data 5 - sign_ext_out_1->32 - não tem na video aula
-        32'b0, // Data 6 - sign_ext_out_16->32 - não tem na video aula
-        32'b0, // Data 7 - Merge Bytes Oute - não tem na video aula
-        BREG_WRITE_DATA_IN // a saida do mux que vai pro banco de registradores e pra A e B
+        ULA_out,          // Data 0
+        32'b0,            // Data 1 - MDR
+        HI_out,           // Data 2 - HI_out
+        LO_out,           // Data 3 - LO_out
+        32'b0,            // Data 4 - SHIFT_out
+        32'b0,            // Data 5 - sign_ext_out_1->32
+        32'b0,            // Data 6 - sign_ext_out_16->32
+        32'b0,            // Data 7 - Merge Bytes
+        BREG_WRITE_DATA_IN
     );
 
     mux_ulaA M_ULA_A_ (
@@ -142,6 +150,7 @@ module cpu_add(
         Gt,
         Lt
     );
+
 
     Registrador PC_ (
         clk, // clock - declarado no modulo
@@ -209,42 +218,81 @@ module cpu_add(
         B_out // saida 
     );
 
-    // Em seguida, preciso instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
+    // Em seguida, preciso 
+    //instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
+
+        // --- Novos blocos para MULT/DIV/MFHI/MFLO ---
+    multiplier MULT_inst (
+        .A(A_out),
+        .B(B_out),
+        .HI(mult_hi),
+        .LO(mult_lo)
+    );
+
+    divider DIV_inst (
+        .A(A_out),
+        .B(B_out),
+        .LO(div_lo),
+        .HI(div_hi),
+        .div_zero(div_zero)
+    );
+
+    // Mux para escolher entre resultado do multiplicador e divisor
+    wire [31:0] HI_input, LO_input;
+    assign HI_input = (HI_Control) ? div_hi : mult_hi;
+    assign LO_input = (LO_Control) ? div_lo : mult_lo;
+
+    // Registradores HI e LO
+    Registrador HI_reg (
+        .Clk(clk),
+        .Reset(reset),
+        .Load(HI_Write),
+        .Entrada(HI_input),
+        .Saida(HI_out)
+    );
+
+    Registrador LO_reg (
+        .Clk(clk),
+        .Reset(reset),
+        .Load(LO_Write),
+        .Entrada(LO_input),
+        .Saida(LO_out)
+    );
+    // --- Fim dos novos blocos ---
 
     sign_xtend_16_32 SXTND_ (
         OFFSET,
         SXTND_out
     );
 
-    ctrl_unit CTRL_(
-        clk,
-        reset,// reset de entrada
-        // flags da ULA
-        Of, // fio de overflow
-        Ng, // negacao
-        Zr, // zero
-        Eq, // igual
-        Gt, // maior
-        Lt, // menor
-        // fim   
-        OPCODE, // opcode
-        OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
-        // sinais de controle pra todos os muxs e todas as unidades do controle
-        PC_w, 
-        MEM_w,
-        IR_w,
-        Reg_w,
-        AB_w,
-        RB_w,
-        //
-        ULA_c,
-        M_WREG,
-        M_ULAA,
-        M_ULAB,
-
-        // reset de saida
-        reset,
-        MEM_TO_REG_Selector
+    ctrl_unit CTRL_ (
+        .clk(clk),
+        .reset(reset),
+        .Of(Of),
+        .Ng(Ng),
+        .Zr(Zr),
+        .Eq(Eq),
+        .Gt(Gt),
+        .Lt(Lt),
+        .OPCODE(OPCODE),
+        .OFFSET(OFFSET),
+        .div_zero(div_zero),          // nova entrada
+        .PC_w(PC_w),
+        .MEM_w(MEM_w),
+        .IR_w(IR_w),
+        .Reg_w(Reg_w),
+        .AB_w(AB_w),
+        .RB_w(RB_w),
+        .ULA_c(ULA_c),
+        .M_WREG(M_WREG),
+        .M_ULAA(M_ULAA),
+        .M_ULAB(M_ULAB),
+        .rst_out(rst_out),
+        .MEM_TO_REG_Selector(MEM_TO_REG_Selector),
+        .HI_Write(HI_Write),          // novas saídas
+        .LO_Write(LO_Write),
+        .HI_Control(HI_Control),
+        .LO_Control(LO_Control)
     );
 
     // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
