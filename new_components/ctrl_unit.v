@@ -28,7 +28,7 @@ module ctrl_unit(
     output reg  [1:0] M_ULAB,
     output reg  [3:0] MUX_DATA_SOURCE_SELECTOR, // controle do mux data source
     output reg  [3:0] MUX_IORD_SELECTOR, // controle do mux iord
-
+    output reg  [3:0] MUX_PC_SOURCE_SELECTOR, // controle do mux pc source
     // Funciona de acordo com o Clock - sincronamente com o clock
     output reg    rst_out,
 
@@ -56,7 +56,7 @@ parameter ADDI = 6'b001000;
 parameter RESET = 6'b111111;
 
 initial begin
-    rst_out = 1'b1;
+    rst_out = 1'b1; // Sinal de reset para o processador
 end
 
 // Mapeia a maquina de estados
@@ -65,6 +65,9 @@ always @(posedge clk) begin
         if (STATE != ST_RESET) begin
             STATE = ST_RESET;
             // Resetar os sinais de controle
+            MUX_IORD_SELECTOR = 4'b0000; 
+            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+            MUX_PC_SOURCE_SELECTOR = 4'b0000;
             PC_w = 1'b0;
             MEM_w = 1'b0;
             IR_w = 1'b0;
@@ -76,14 +79,16 @@ always @(posedge clk) begin
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
-            MUX_IORD_SELECTOR = 4'b0000; 
-            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+
             rst_out = 1'b1; // Sinal de reset para o processador
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
         end
         else begin
             STATE = ST_COMMON; // Volta para o estado comum após o reset
+            MUX_IORD_SELECTOR = 4'b0000; 
+            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+            MUX_PC_SOURCE_SELECTOR = 4'b0000;
             PC_w = 1'b0;
             MEM_w = 1'b0;
             IR_w = 1'b0;
@@ -95,8 +100,7 @@ always @(posedge clk) begin
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
-            MUX_IORD_SELECTOR = 4'b0000; 
-            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+
             rst_out = 1'b0; // Sinal de reset para o processador
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
@@ -109,6 +113,9 @@ always @(posedge clk) begin
                 // Processo de somar PC + 4
                 if(COUNTER == 3'b000 || COUNTER == 3'b001 || COUNTER == 3'b010) begin
                     STATE = ST_COMMON;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
                     IR_w = 1'b0;
@@ -120,8 +127,7 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
-                    MUX_IORD_SELECTOR = 4'b0000; 
-                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -129,6 +135,9 @@ always @(posedge clk) begin
                 end 
                 else if (COUNTER == 3'b011) begin
                     STATE = ST_COMMON;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     PC_w = 1'b1; // Escreve o resultado de PC + 4 no PC
                     MEM_w = 1'b0;
                     IR_w = 1'b1; // Escreve a instrução lida da memória no registrador de instrução
@@ -140,8 +149,6 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
-                    MUX_IORD_SELECTOR = 4'b0000; 
-                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -150,6 +157,9 @@ always @(posedge clk) begin
                 // PC e IR já foram atualizados, agora é hora de preparar os sinais de controle para a próxima instrução 
                 else if (COUNTER == 3'b100 ) begin
                     STATE = ST_COMMON;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     PC_w = 1'b0; 
                     MEM_w = 1'b0;
                     IR_w = 1'b1; 
@@ -161,8 +171,6 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b00;
-                    MUX_IORD_SELECTOR = 4'b0000; 
-                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -209,6 +217,7 @@ always @(posedge clk) begin
                     M_ULAB = 2'b00;
                     MUX_IORD_SELECTOR = 4'b0000; 
                     MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = 3'b000;
 
@@ -255,6 +264,7 @@ always @(posedge clk) begin
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
 
                 end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
             ST_SUB: begin
                 if(COUNTER == 3'b000) begin
@@ -295,6 +305,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
             ST_AND: begin
                 if(COUNTER == 3'b000) begin
@@ -334,6 +345,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
 
             // JR
@@ -373,6 +385,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
             // Estado de adição imediata, addi
             ST_ADDI: begin
@@ -413,6 +426,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
 
             ST_RESET: begin
@@ -427,6 +441,9 @@ always @(posedge clk) begin
                 M_WREG = 1'b0;
                 M_ULAA = 1'b0;
                 M_ULAB = 2'b00;
+                MUX_IORD_SELECTOR = 4'b0000; 
+                MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
                 rst_out = 1'b1; // Sinal de reset para o processador
                 COUNTER = 3'b000;
             end

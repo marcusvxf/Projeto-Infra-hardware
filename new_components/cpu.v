@@ -39,6 +39,7 @@ module cpu(
     wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
     wire [3:0]  MUX_DATA_SOURCE_SELECTOR;
     wire [3:0]  MUX_IORD_SELECTOR;
+    wire [3:0]  MUX_PC_SOURCE_SELECTOR;
 
 
 // Partes da instrucao necessarias  
@@ -51,16 +52,12 @@ module cpu(
     // Write Reg 
     wire [4:0] WRITEREG_in; // variavel do mux 3 
 
-
     // DECLARAR OS SINAIS DE CONTROLE
     // Control wires 
-
-
 
     wire AB_w; // contrle de escrita de A e B ao mesmo tempo
     wire RB_w; // controle de escrita do banco de registradores, pra ler os dados e passar pra A e B
     
-
     // DECLARAR OS PC_w, ULA_out, PC_out 
   
     // Data_wires - fio de dados / sinais de dados
@@ -80,6 +77,7 @@ module cpu(
     wire [31:0] ADDRESS_IORD_IN; // endereço de entrada do mux IorD, que vai pra memoria
     wire [31:0] DATA_DATA_SOURCE_IN;
     wire [31:0] BREG_WRITE_DATA_IN; 
+    wire [31:0] PC_IN; 
 
 
     // instrução
@@ -142,6 +140,15 @@ module cpu(
         B_out,
         A_out,
         ADDRESS_IORD_IN
+    );
+
+    mux_pc_source M_PC_SOURCE_ (
+        MUX_PC_SOURCE_SELECTOR, // controle do mux pc source
+        ULA_out, // Data 0 - resultado da ULA
+        REG_ALU_OUT_out, // Data 1 - resultado da ULA registrado
+        PC_out, 
+        32'b0, // exceptions
+        PC_IN // a saida do mux que vai pro PC
     );
 
     // ---------------------------------------------------------------
@@ -265,6 +272,7 @@ module cpu(
         M_ULAB,
         MUX_DATA_SOURCE_SELECTOR,
         MUX_IORD_SELECTOR,
+        MUX_PC_SOURCE_SELECTOR,
         // reset de saida
         reset,
         MEM_TO_REG_Selector
