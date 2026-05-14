@@ -9,56 +9,17 @@
 # Compile of mux_pcSource.v was successful.
 # Compile of mux_regDst.v was successful.
 # Compile of mux_ulaA.v was successful.
-# Compile of mux_ulaB.v was successful.
-# Compile of sign_xtend_16_32.v was successful.
-# Compile of cpu.v was successful.
-# Compile of mux_data_source.v was successful.
-# Compile of mux_iord.v was successful.
-# 16 compiles, 0 failed with no errors.
 vsim -gui work.cpu
 # vsim -gui work.cpu 
-# Start time: 09:04:19 on May 14,2026
-# Loading work.cpu
-# Loading work.mux_regDst
-# ** Error: (vsim-3033) Instantiation of 'mux_mem_to_reg' failed. The design unit was not found.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 100
-#         Searched libraries:
-#             D:/downloads/Componentes do Projeto/work
-# Loading work.mux_ulaA
-# Loading work.mux_ulaB
-# Loading work.mux_data_source
-# Loading work.sign_xtend_16_32
-# Loading work.ctrl_unit
-# Error loading design
-# End time: 09:04:19 on May 14,2026, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 2
-# Compile of Banco_reg.vhd was successful.
-# Compile of Instr_Reg.vhd was successful.
-# Compile of Memoria.vhd was successful.
-# Compile of RegDesloc.vhd was successful.
-# Compile of Registrador.vhd was successful.
-# Compile of ula32.vhd was successful.
-# Compile of cpu_add.v was successful.
-# Compile of ctrl_unit.v was successful.
-# Compile of mux_pcSource.v was successful.
-# Compile of mux_regDst.v was successful.
-# Compile of mux_ulaA.v was successful.
-# Compile of mux_ulaB.v was successful.
-# Compile of sign_xtend_16_32.v was successful.
-# Compile of cpu.v was successful.
-# Compile of mux_data_source.v was successful.
-# Compile of mux_iord.v was successful.
-# Compile of mux_mem_to_reg.v was successful.
-# 17 compiles, 0 failed with no errors.
-vsim -gui work.cpu
-# vsim -gui work.cpu 
-# Start time: 09:06:03 on May 14,2026
+# Start time: 10:26:00 on May 14,2026
 # Loading work.cpu
 # Loading work.mux_regDst
 # Loading work.mux_mem_to_reg
 # Loading work.mux_ulaA
 # Loading work.mux_ulaB
 # Loading work.mux_data_source
+# Loading work.mux_iord
+# Loading work.mux_pc_source
 # Loading work.sign_xtend_16_32
 # Loading work.ctrl_unit
 # Loading std.standard
@@ -78,146 +39,354 @@ vsim -gui work.cpu
 # Loading work.banco_reg(behavioral_arch)
 # Loading work.ula32(behavioral)
 # ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 120
-add wave -position insertpoint sim:/cpu/*
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 119
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 136
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'CTRL_'.  Expected 26, found 25.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'MUX_PC_SOURCE_SELECTOR'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(31).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (3) for port 'rst_out'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(33).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3722) D:/downloads/Componentes do Projeto/new_components/cpu.v(247): [TFMPC] - Missing connection for port 'MEM_TO_REG_Selector'.
+# Compile of mux_ulaB.v was successful.
+# Compile of sign_xtend_16_32.v was successful.
+# Compile of cpu.v was successful.
+# Compile of mux_data_source.v was successful.
+# Compile of mux_iord.v was successful.
+# Compile of mux_mem_to_reg.v was successful.
+# Compile of mux_pc_source.v was successful.
+# 18 compiles, 0 failed with no errors.
+add wave -position insertpoint  \
+sim:/cpu/clk \
+sim:/cpu/reset
 force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
-run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
 add wave -position insertpoint  \
-sim:/cpu/CTRL_/STATE
-add wave -position insertpoint  \
-sim:/cpu/CTRL_/COUNTER
-run
-run
-add wave -position insertpoint  \
+sim:/cpu/REG_BASE_/Cluster(20) \
+sim:/cpu/REG_BASE_/Cluster(23) \
 sim:/cpu/REG_BASE_/Cluster(25)
-add wave -position insertpoint  \
-sim:/cpu/REG_BASE_/Cluster(23)
 run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-add wave -position insertpoint  \
-sim:/cpu/REG_BASE_/Cluster(20)
-run
-run
-run
-run
-run
-run
-run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
 run
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.cpu
+# Loading work.mux_mem_to_reg
+# Loading work.mux_data_source
+# Loading work.mux_iord
+# Loading work.mux_pc_source
+# Loading work.sign_xtend_16_32
 # ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 120
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 119
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 136
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'CTRL_'.  Expected 26, found 25.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'MUX_PC_SOURCE_SELECTOR'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(31).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (3) for port 'rst_out'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(33).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3722) D:/downloads/Componentes do Projeto/new_components/cpu.v(247): [TFMPC] - Missing connection for port 'MEM_TO_REG_Selector'.
 force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
 run
+# GetModuleFileName: Não foi possível encontrar o módulo especificado.
+# 
+# 
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 119
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 136
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'CTRL_'.  Expected 26, found 25.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'MUX_PC_SOURCE_SELECTOR'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(31).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (3) for port 'rst_out'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(33).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3722) D:/downloads/Componentes do Projeto/new_components/cpu.v(247): [TFMPC] - Missing connection for port 'MEM_TO_REG_Selector'.
+# Compile of mux_mem_to_reg.v was successful.
+# Compile of mux_mem_to_reg.v was successful.
+force -freeze sim:/cpu/clk HiZ 0
+run
+# GetModuleFileName: Não foi possível encontrar o módulo especificado.
+# 
+# 
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Error: Unknown intended_device_family UNUSED
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.mux_mem_to_reg
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 119
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 136
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'CTRL_'.  Expected 26, found 25.
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'MUX_PC_SOURCE_SELECTOR'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(31).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (3) for port 'rst_out'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v(33).
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/CTRL_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 247
+# ** Warning: (vsim-3722) D:/downloads/Componentes do Projeto/new_components/cpu.v(247): [TFMPC] - Missing connection for port 'MEM_TO_REG_Selector'.
+# Compile of mux_mem_to_reg.v was successful.
+# Compile of mux_mem_to_reg.v was successful.
+# Compile of Banco_reg.vhd was successful.
+# Compile of Instr_Reg.vhd was successful.
+# Compile of Memoria.vhd was successful.
+# Compile of RegDesloc.vhd was successful.
+# Compile of Registrador.vhd was successful.
+# Compile of ula32.vhd was successful.
+# Compile of cpu_add.v was successful.
+# Compile of ctrl_unit.v was successful.
+force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
+# Compile of mux_pcSource.v was successful.
+# Compile of mux_regDst.v was successful.
+# Compile of mux_ulaA.v was successful.
+# Compile of mux_ulaB.v was successful.
+# Compile of sign_xtend_16_32.v was successful.
+# Compile of cpu.v was successful.
+# Compile of mux_data_source.v was successful.
+# Compile of mux_iord.v was successful.
+# Compile of mux_mem_to_reg.v was successful.
+# Compile of mux_pc_source.v was successful.
+# 18 compiles, 0 failed with no errors.
+noforce sim:/cpu/clk
+force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
+run
+# GetModuleFileName: Não foi possível encontrar o módulo especificado.
+# 
+# 
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
@@ -329,43 +498,8 @@ run
 # Compile of mux_data_source.v was successful.
 # Compile of mux_iord.v was successful.
 # Compile of mux_mem_to_reg.v was successful.
-# 17 compiles, 0 failed with no errors.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.cpu
-# Loading work.mux_regDst
-# Loading work.mux_mem_to_reg
-# Loading work.mux_ulaA
-# Loading work.mux_ulaB
-# Loading work.mux_data_source
-# Loading work.sign_xtend_16_32
-# Loading work.ctrl_unit
-# Loading work.registrador(behavioral_arch)
-# Loading work.ram_constants
-# Loading work.memoria(behavioral_arch)
-# Loading work.instr_reg(behavioral_arch)
-# Loading work.banco_reg(behavioral_arch)
-# Loading work.ula32(behavioral)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 120
-# Compile of Banco_reg.vhd was successful.
-# Compile of Instr_Reg.vhd was successful.
-# Compile of Memoria.vhd was successful.
-# Compile of RegDesloc.vhd was successful.
-# Compile of Registrador.vhd was successful.
-# Compile of ula32.vhd was successful.
-# Compile of cpu_add.v was successful.
-# Compile of ctrl_unit.v was successful.
-# Compile of mux_pcSource.v was successful.
-# Compile of mux_regDst.v was successful.
-# Compile of mux_ulaA.v was successful.
-# Compile of mux_ulaB.v was successful.
-# Compile of sign_xtend_16_32.v was successful.
-# Compile of cpu.v was successful.
-# Compile of mux_data_source.v was successful.
-# Compile of mux_iord.v was successful.
-# Compile of mux_mem_to_reg.v was successful.
-# 17 compiles, 0 failed with no errors.
+# Compile of mux_pc_source.v was successful.
+# 18 compiles, 0 failed with no errors.
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # Loading work.cpu
@@ -375,6 +509,7 @@ restart
 # Loading work.mux_ulaB
 # Loading work.mux_data_source
 # Loading work.mux_iord
+# Loading work.mux_pc_source
 # Loading work.sign_xtend_16_32
 # Loading work.ctrl_unit
 # Loading work.registrador(behavioral_arch)
@@ -384,11 +519,14 @@ restart
 # Loading work.banco_reg(behavioral_arch)
 # Loading work.ula32(behavioral)
 # ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 121
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 119
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 138
+#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 136
 force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
 run
+# GetModuleFileName: Não foi possível encontrar o módulo especificado.
+# 
+# 
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
@@ -487,162 +625,6 @@ run
 run
 run
 run
-run
-run
-run
-# Compile of Banco_reg.vhd was successful.
-# Compile of Instr_Reg.vhd was successful.
-# Compile of Memoria.vhd was successful.
-# Compile of RegDesloc.vhd was successful.
-# Compile of Registrador.vhd was successful.
-# Compile of ula32.vhd was successful.
-# Compile of cpu_add.v was successful.
-# Compile of ctrl_unit.v was successful.
-# Compile of mux_pcSource.v was successful.
-# Compile of mux_regDst.v was successful.
-# Compile of mux_ulaA.v was successful.
-# Compile of mux_ulaB.v was successful.
-# Compile of sign_xtend_16_32.v was successful.
-# Compile of cpu.v was successful.
-# Compile of mux_data_source.v was successful.
-# Compile of mux_iord.v was successful.
-# Compile of mux_mem_to_reg.v was successful.
-# 17 compiles, 0 failed with no errors.
-# Compile of Banco_reg.vhd was successful.
-# Compile of Instr_Reg.vhd was successful.
-# Compile of Memoria.vhd was successful.
-# Compile of RegDesloc.vhd was successful.
-# Compile of Registrador.vhd was successful.
-# Compile of ula32.vhd was successful.
-# Compile of cpu_add.v was successful.
-# Compile of ctrl_unit.v was successful.
-# Compile of mux_pcSource.v was successful.
-# Compile of mux_regDst.v was successful.
-# Compile of mux_ulaA.v was successful.
-# Compile of mux_ulaB.v was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.cpu
-# Loading work.mux_regDst
-# Loading work.mux_mem_to_reg
-# Loading work.mux_ulaA
-# Loading work.mux_ulaB
-# Loading work.mux_data_source
-# Loading work.mux_iord
-# Loading work.sign_xtend_16_32
-# Loading work.ctrl_unit
-# Loading work.registrador(behavioral_arch)
-# Loading work.ram_constants
-# Loading work.memoria(behavioral_arch)
-# Loading work.instr_reg(behavioral_arch)
-# Loading work.banco_reg(behavioral_arch)
-# Loading work.ula32(behavioral)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (1) for port 'Data_2'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v(5).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_ULA_B_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 121
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (4) for port 'selector'. The port definition is at: D:/downloads/Componentes do Projeto/new_components/mux_iord.v(2).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/M_IORD_ File: D:/downloads/Componentes do Projeto/new_components/cpu.v Line: 138
-# Compile of sign_xtend_16_32.v was successful.
-# Compile of cpu.v was successful.
-force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
-# Compile of mux_data_source.v was successful.
-# Compile of mux_iord.v was successful.
-# Compile of mux_mem_to_reg.v was successful.
-# 17 compiles, 0 failed with no errors.
-run
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/REG_BASE_
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Error: Unknown intended_device_family UNUSED
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_/MEM
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483648 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483647 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483646 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Error: (vsim-86) Argument value -2147483645 is not in bounds of subtype NATURAL.
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_UNSIGNED: vector truncated
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /cpu/MEM_
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 0 ps  Iteration: 3  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 50 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_One
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Two
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
-# ** Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-#    Time: 100 ps  Iteration: 1  Instance: /cpu/MEM_/MEM_plus_Three
 run
 run
 run
