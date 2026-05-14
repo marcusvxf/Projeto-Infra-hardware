@@ -5,12 +5,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	mux_mem_to_reg
 
-} {} {}} {D:/downloads/Componentes do Projeto/new_components/cpu.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu.v}
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/cpu_add.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu_add.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module cpu
+-- Compiling module cpu_add
 
 Top level modules:
-	cpu
+	cpu_add
 
 } {} {}} {D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020

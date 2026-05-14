@@ -38,6 +38,7 @@ module cpu(
     wire [1:0]  M_ULAB;
     wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
     wire [3:0]  MUX_DATA_SOURCE_SELECTOR;
+    wire [3:0]  MUX_IORD_SELECTOR;
 
 
 // Partes da instrucao necessarias  
@@ -127,11 +128,20 @@ module cpu(
 
     mux_data_source M_DATA_SOURCE_ (
         MUX_DATA_SOURCE_SELECTOR,
+        A_out,
+        32'b0, // Data 1 - MERGEBYTE
+        32'b0, // Data 2 - XCHG1 
+        32'b0, // Data 3 - XCHG2  
+        DATA_DATA_SOURCE_IN
+    );
+
+    mux_iord M_IORD_ (
+        MUX_IORD_SELECTOR,
         PC_out,
         REG_ALU_OUT_out,
         B_out,
         A_out,
-        DATA_DATA_SOURCE_IN
+        ADDRESS_IORD_IN
     );
 
     // ---------------------------------------------------------------
@@ -172,12 +182,12 @@ module cpu(
     //------------------------------------------------
     // COMPONENTES BASE
     Memoria MEM_(
-        PC_out, // tem o endereco que é PC  
+        ADDRESS_IORD_IN, // tem o endereco que é PC  
         clk, // o clock 
         
         MEM_w, // fio que diz se é escrita ou leitura - Wr  
 
-        ULA_out, // fio de entrada na memoria pra leitura.
+        DATA_DATA_SOURCE_IN, // fio de entrada na memoria pra leitura.
         
         MEM_to_IR// o fio de saida da mem que vai pra ir 
     );
@@ -248,12 +258,13 @@ module cpu(
         AB_w,
         RB_w,
         ALU_OUT_W,
-        //
         ULA_c,
+        // SELECTORES DE MUX
         M_WREG,
         M_ULAA,
         M_ULAB,
-
+        MUX_DATA_SOURCE_SELECTOR,
+        MUX_IORD_SELECTOR,
         // reset de saida
         reset,
         MEM_TO_REG_Selector

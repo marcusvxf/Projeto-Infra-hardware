@@ -25,7 +25,9 @@ module ctrl_unit(
     // Controlador pra os multiplexadores  
     output reg    M_WREG, // RegDst
     output reg    M_ULAA,
-    output reg  [1:0]    M_ULAB,
+    output reg  [1:0] M_ULAB,
+    output reg  [3:0] MUX_DATA_SOURCE_SELECTOR, // controle do mux data source
+    output reg  [3:0] MUX_IORD_SELECTOR, // controle do mux iord
 
     // Funciona de acordo com o Clock - sincronamente com o clock
     output reg    rst_out,
@@ -74,6 +76,8 @@ always @(posedge clk) begin
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
+            MUX_IORD_SELECTOR = 4'b0000; 
+            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
             rst_out = 1'b1; // Sinal de reset para o processador
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
@@ -91,6 +95,8 @@ always @(posedge clk) begin
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
+            MUX_IORD_SELECTOR = 4'b0000; 
+            MUX_DATA_SOURCE_SELECTOR = 4'b0000;
             rst_out = 1'b0; // Sinal de reset para o processador
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
@@ -114,6 +120,8 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -132,6 +140,8 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -151,6 +161,8 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b00;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -195,6 +207,8 @@ always @(posedge clk) begin
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b00;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = 3'b000;
 
