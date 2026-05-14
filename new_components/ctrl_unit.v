@@ -49,6 +49,7 @@ parameter ST_RESET = 4'b0011;
 parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
 parameter ST_AND = 4'b0101; // Novo estado para AND
 parameter ST_JR = 4'b0110; // Novo estado para JR
+parameter ST_XCHG = 4'b0111; // Novo estado para XCHG
 
 // Opcode
 parameter R_TYPE = 6'b000000;
@@ -169,6 +170,9 @@ always @(posedge clk) begin
                             end
                             else if (funct == 6'b001000) begin // Verifica se é a instrução JR (funct = 8)
                                 STATE = ST_JR; // Implementar o estado de JR
+                            end
+                            else if(funct = 6'b000101) begin // Verifica se é a instrução BNE (funct = 5)
+                                STATE
                             end
 
                         end

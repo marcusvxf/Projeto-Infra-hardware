@@ -16,11 +16,14 @@ module cpu_add(
     wire PC_w;
     wire MEM_w;
     wire IR_w;
-
-    // reg write 
-    wire Reg_w; // Novas fios para instancias do Banco de Registadores
-    
-    // controlador da ULA
+    wire ALU_OUT_W;
+    wire aluOut_w;
+    wire MemRead;
+    wire ALUSrcA; // controle do multiplexador de A da ULA
+    wire [1:0] ALUSrcB; // controle do multiplexador de B da ULA 
+    wire [1:0] ALU_flag;
+    wire [1:0] RegDst;
+    wire Reg_w;
     wire AB_r;
 
 
@@ -34,6 +37,7 @@ module cpu_add(
     wire        M_ULAA;
     wire [1:0]  M_ULAB;
     wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
+    wire [3:0]  MUX_DATA_SOURCE_SELECTOR;
 
 
 // Partes da instrucao necessarias  
@@ -68,33 +72,24 @@ module cpu_add(
     wire [31:0] RB_to_B;  // sinal de dado
     wire [31:0] A_out;  // saida de B
     wire [31:0] B_out;  // saia de A  
+    wire [31:0] REG_ALU_OUT_out;
     wire [31:0] SXTND_out;
     wire [31:0] ULAA_in;
     wire [31:0] ULAB_in;
-
+    wire [31:0] ADDRESS_IORD_IN; // endereço de entrada do mux IorD, que vai pra memoria
+    wire [31:0] DATA_DATA_SOURCE_IN;
     wire [31:0] BREG_WRITE_DATA_IN; 
-    
-    
-    // novas
-    wire aluOut_w;
-    wire MemRead;
-    
-    wire ALUSrcA; // controle do multiplexador de A da ULA
-    
-    wire [1:0] ALUSrcB; // controle do multiplexador de B da ULA 
-    wire [1:0] ALU_flag;
-    
-    wire [1:0] RegDst;
+
 
     // instrução
     wire [5:0] funct;
-
     wire [2:0] ALU_op;
     wire [2:0] i_or_d;
-
     wire [7:0] MemtoReg;
 
-    mux_regDst M_REG_(
+    // MUXES
+
+    mux_regDst M_REG_DST_(
         M_WREG,
         RT, // primeira entrada
         OFFSET, // segunda entrada 
@@ -130,18 +125,17 @@ module cpu_add(
         ULAB_in
     );
 
-    ula32 ULA_(
-        ULAA_in,
-        ULAB_in,
-        ULA_c,
-        ULA_out,
-        Of,
-        Ng,
-        Zr,
-        Eq,
-        Gt,
-        Lt
+    mux_data_source M_DATA_SOURCE_ (
+        MUX_DATA_SOURCE_SELECTOR,
+        PC_out,
+        REG_ALU_OUT_out
+        B_out,
+        A_out,
+        DATA_DATA_SOURCE_IN
     );
+
+    // ---------------------------------------------------------------
+    // Registradores
 
     Registrador PC_ (
         clk, // clock - declarado no modulo
@@ -149,9 +143,34 @@ module cpu_add(
         PC_w, // pc write pra escrita 
         ULA_out, // unico sinal q entra pra pc e a saida da ula
         PC_out // saida 
-
     );
 
+    Registrador A_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
+        RB_to_A, // entrada de A
+        A_out // saida 
+    );
+
+    Registrador B_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
+        RB_to_B, // entrada de B
+        B_out // saida 
+    );
+
+    Registrador ALU_OUT_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        ALU_OUT_W, 
+        ULA_out, 
+        REG_ALU_OUT_out
+    );
+
+    //------------------------------------------------
+    // COMPONENTES BASE
     Memoria MEM_(
         PC_out, // tem o endereco que é PC  
         clk, // o clock 
@@ -184,36 +203,28 @@ module cpu_add(
         RS,// read reg 1 - rs 
         RT,// read reg 2 - rt     
         WRITEREG_in,// WriteReg
-
         BREG_WRITE_DATA_IN, 
-
         // Agora, as saidas de a e b
         RB_to_A,
         RB_to_B
     );
 
-    Registrador A_ (
-        clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
-        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
-        RB_to_A, // entrada de A
-        A_out // saida 
-
-    );
-
-    Registrador B_ (
-        clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
-        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
-        RB_to_B, // entrada de B
-        B_out // saida 
-    );
-
-    // Em seguida, preciso instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
-
     sign_xtend_16_32 SXTND_ (
         OFFSET,
         SXTND_out
+    );
+
+    ula32 ULA_(
+        ULAA_in,
+        ULAB_in,
+        ULA_c,
+        ULA_out,
+        Of,
+        Ng,
+        Zr,
+        Eq,
+        Gt,
+        Lt
     );
 
     ctrl_unit CTRL_(
