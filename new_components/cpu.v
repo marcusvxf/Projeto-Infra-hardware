@@ -1,4 +1,4 @@
-module cpu_add(
+module cpu(
     input wire clk,
     input wire reset
 );
@@ -99,7 +99,7 @@ module cpu_add(
 
     mux_mem_to_reg M_MEM_TO_REG_(
         MEM_TO_REG_Selector,
-        ULA_out, // Data 0
+        REG_ALU_OUT_out, // Data 0
         32'b0, // Data 1 - MDR - não tem na video aula
         32'b0, // Data 2 - HI_out - não tem na video aula
         32'b0, // Data 3 - LO_out - não tem na video aula
