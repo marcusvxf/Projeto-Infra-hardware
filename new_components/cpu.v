@@ -128,7 +128,7 @@ module cpu_add(
     mux_data_source M_DATA_SOURCE_ (
         MUX_DATA_SOURCE_SELECTOR,
         PC_out,
-        REG_ALU_OUT_out
+        REG_ALU_OUT_out,
         B_out,
         A_out,
         DATA_DATA_SOURCE_IN

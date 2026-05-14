@@ -172,8 +172,8 @@ always @(posedge clk) begin
                             else if (funct == 6'b001000) begin // Verifica se é a instrução JR (funct = 8)
                                 STATE = ST_JR; // Implementar o estado de JR
                             end
-                            else if(funct = 6'b000101) begin // Verifica se é a instrução BNE (funct = 5)
-                                STATE
+                            else if (funct == 6'b000101) begin // Verifica se é a instrução BNE (funct = 5)
+                                STATE = ST_XCHG; // Implementar o estado de XCHG, que será reutilizado para a instrução BNE, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
                             end
 
                         end
