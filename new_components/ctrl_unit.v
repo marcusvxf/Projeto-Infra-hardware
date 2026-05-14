@@ -19,12 +19,9 @@ module ctrl_unit(
     output reg    Reg_w,
     output reg    AB_w,
     output reg    RB_w,
-
-   
+    output reg    ALU_OUT_W,
     // Controladores com mais de 1 bit
     output reg [2:0]    ULA_c,
-
-    
     // Controlador pra os multiplexadores  
     output reg    M_WREG, // RegDst
     output reg    M_ULAA,
@@ -73,6 +70,7 @@ always @(posedge clk) begin
             AB_w = 1'b0;
             RB_w = 1'b0;
             ULA_c = 3'b000;
+            ALU_OUT_W = 1'b0;
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
@@ -88,6 +86,7 @@ always @(posedge clk) begin
             Reg_w = 1'b0;
             AB_w = 1'b0;
             RB_w = 1'b0;
+            ALU_OUT_W = 1'b0;
             ULA_c = 3'b000;
             M_WREG = 1'b0;
             M_ULAA = 1'b0;
@@ -110,6 +109,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001;
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
@@ -127,7 +127,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                      RB_w = 1'b0;
-
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar PC + 4
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
@@ -146,6 +146,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b1;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; 
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
@@ -189,6 +190,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; 
                     M_WREG = 1'b0;
                     M_ULAA = 1'b0;
@@ -210,6 +212,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b1;
+                    ALU_OUT_W = 1'b1;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -229,6 +232,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
                     AB_w = 1'b0;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -249,6 +253,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b1;    
+                    ALU_OUT_W = 1'b1;
                     ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -268,6 +273,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
                     AB_w = 1'b0;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0; 
                     ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -287,6 +293,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b1;
+                    ALU_OUT_W = 1'b1;
                     ULA_c = 3'b011; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -305,6 +312,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
                     AB_w = 1'b0;
                     RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b011; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -325,6 +333,7 @@ always @(posedge clk) begin
                     IR_w = 1'b0;
                     Reg_w = 1'b0;
                     AB_w = 1'b0;  
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -342,6 +351,7 @@ always @(posedge clk) begin
                     IR_w = 1'b0;
                     Reg_w = 1'b0;
                     AB_w = 1'b0;  
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -362,6 +372,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b1;
                     AB_w = 1'b0;
                     RB_w = 1'b1;
+                    ALU_OUT_W = 1'b1;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
                     M_WREG = 1'b1; 
                     M_ULAA = 1'b1;
@@ -380,6 +391,7 @@ always @(posedge clk) begin
                     Reg_w = 1'b1; // Escreve o resultado da ULA no registrador de destino
                     AB_w = 1'b0;
                     RB_w = 1'b1;
+                    ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
                     M_WREG = 1'b0; 
                     M_ULAA = 1'b1;

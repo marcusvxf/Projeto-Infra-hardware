@@ -247,6 +247,7 @@ module cpu_add(
         Reg_w,
         AB_w,
         RB_w,
+        ALU_OUT_W,
         //
         ULA_c,
         M_WREG,
