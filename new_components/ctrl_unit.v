@@ -21,9 +21,9 @@ module ctrl_unit(
     output reg    AB_w,
     output reg    RB_w,
     output reg    ALU_OUT_W,
-    output reg MDR_W,
-    output reg XCHG_CONTROL_1;
-    output reg XCHG_CONTROL_2;
+    output reg    MDR_W,
+    output reg    XCHG_CONTROL_1,
+    output reg    XCHG_CONTROL_2,
     // Controladores com mais de 1 bit
     output reg [2:0]    ULA_c,
     // Controlador pra os multiplexadores  
@@ -46,7 +46,7 @@ module ctrl_unit(
 
 // Variaveis
 reg [3:0] STATE = 4'b0000; // estado da maquina de estados atualizar ao adicionar estados
-reg [2:0] COUNTER;
+reg [3:0] COUNTER;
 reg [5:0] funct; // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
 
 // Estados principais da maquina 
@@ -107,7 +107,6 @@ always @(posedge clk) begin
             M_REG_DST_SELECTOR = 1'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
-
             rst_out = 1'b1; // Sinal de reset para o processador
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
@@ -136,7 +135,31 @@ always @(posedge clk) begin
         MDR_W = 1'b0;
     end else begin 
 
-        case (STATE)
+            PC_w <= 1'b0;
+            MEM_w <= 1'b0;
+            IR_w <= 1'b0;
+            Reg_w <= 1'b0;
+            AB_w <= 1'b0;
+            RB_w <= 1'b0;
+            ALU_OUT_W <= 1'b0;
+            MDR_W <= 1'b0;
+            XCHG_CONTROL_1 <= 1'b0;
+            XCHG_CONTROL_2 <= 1'b0;
+            ULA_c <= 3'b000;
+            M_REG_DST_SELECTOR <= 1'b0;
+            M_ULAA <= 1'b0;
+            M_ULAB <= 2'b00;
+            MUX_DATA_SOURCE_SELECTOR <= 4'b0000;
+            MUX_IORD_SELECTOR <= 4'b0000;
+            MUX_PC_SOURCE_SELECTOR <= 4'b0000;
+            rst_out <= 1'b0;
+            MEM_TO_REG_Selector <= 3'b000;
+            HI_Write <= 1'b0;
+            LO_Write <= 1'b0;
+            HI_Control <= 1'b0;
+            LO_Control <= 1'b0;
+
+            case (STATE)
             ST_COMMON: begin
                 // Processo de somar PC + 4
                 if(COUNTER == 3'b000 || COUNTER == 3'b001 || COUNTER == 3'b010) begin
@@ -155,7 +178,6 @@ always @(posedge clk) begin
                     M_REG_DST_SELECTOR = 1'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
-
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -601,7 +623,7 @@ always @(posedge clk) begin
                     M_REG_DST_SELECTOR = 1'b0;
                     MEM_TO_REG_Selector = 3'b000;
                 end
-                else if(COUNTER == 3) begin
+                else if(COUNTER == 3'b011) begin
                     STATE = ST_COMMON;
                     COUNTER = 3'b000;
                     MUX_PC_SOURCE_SELECTOR = 4'b0010;
@@ -635,7 +657,7 @@ always @(posedge clk) begin
                     // manter outros sinais em valores padrão
                     PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                     AB_w = 1'b0; RB_w = 1'b0;
-                    M_WREG = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
+                    M_REG_DST_SELECTOR = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
                     STATE = ST_MULT;
                     COUNTER = COUNTER + 1;
                 end else if (COUNTER == 3'b001) begin
@@ -660,7 +682,7 @@ always @(posedge clk) begin
                     MEM_TO_REG_Selector = 3'b000;
                     PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                     AB_w = 1'b0; RB_w = 1'b0;
-                    M_WREG = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
+                    M_REG_DST_SELECTOR = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
                     STATE = ST_DIV;
                     COUNTER = COUNTER + 1;
                 end else if (COUNTER == 3'b001) begin
@@ -682,7 +704,7 @@ always @(posedge clk) begin
                 HI_Write = 1'b0;
                 LO_Write = 1'b0;
                 Reg_w = 1'b1;
-                M_WREG = 1'b1;            // destino = rd (campo 15:11)
+                M_REG_DST_SELECTOR = 1'b1;            // destino = rd (campo 15:11)
                 MEM_TO_REG_Selector = 3'b010;  // seleciona HI_out no mux
                 PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                 AB_w = 1'b0; RB_w = 1'b0;
@@ -696,7 +718,7 @@ always @(posedge clk) begin
                 HI_Write = 1'b0;
                 LO_Write = 1'b0;
                 Reg_w = 1'b1;
-                M_WREG = 1'b1;
+                M_REG_DST_SELECTOR = 1'b1;
                 MEM_TO_REG_Selector = 3'b011;  // LO_out
                 PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                 AB_w = 1'b0; RB_w = 1'b0;

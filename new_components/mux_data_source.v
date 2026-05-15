@@ -6,8 +6,8 @@ module mux_data_source(
     input wire [31:0] Data_3,
     output wire [31:0] Data_out
 );
-    assign Data_out = (selector == 2'b00) ? Data_0 :
-                      (selector == 2'b01) ? Data_1 :
-                      (selector == 2'b10) ? Data_2 : Data_3;
+    assign Data_out = (selector[1:0] == 2'b00) ? Data_0 :
+                      (selector[1:0] == 2'b01) ? Data_1 :
+                      (selector[1:0] == 2'b10) ? Data_2 : Data_3;
     
 endmodule

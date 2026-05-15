@@ -39,7 +39,7 @@ module cpu(
     wire        M_REG_DST_SELECTOR; // sinal de controle do mux 3 
     wire        M_ULAA;
     wire [1:0]  M_ULAB;
-    wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
+    wire [3:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
     wire [3:0]  MUX_DATA_SOURCE_SELECTOR;
     wire [3:0]  MUX_IORD_SELECTOR;
     wire [3:0]  MUX_PC_SOURCE_SELECTOR;
@@ -273,23 +273,6 @@ module cpu(
         RB_to_B
     );
 
-    Registrador A_ (
-        clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
-        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
-        RB_to_A, // entrada de A
-        A_out // saida 
-
-    );
-
-    Registrador B_ (
-        clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
-        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
-        RB_to_B, // entrada de B
-        B_out // saida 
-    );
-
     // Em seguida, preciso 
     //instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
 
@@ -371,7 +354,7 @@ module cpu(
         AB_w,
         RB_w,
         ALU_OUT_W,
-        MDR_W
+        MDR_W,
         XCHG_CONTROL_1,
         XCHG_CONTROL_2,
         ULA_c,
@@ -381,10 +364,9 @@ module cpu(
         M_ULAB,
         MUX_DATA_SOURCE_SELECTOR,
         MUX_IORD_SELECTOR,
-        MUX_PC_SOURCE_SELECTOR,
-        // reset de saida
-        reset,
-        MEM_TO_REG_Selector
+        MUX_PC_SOURCE_SELECTOR,     
+        rst_out,   
+        MEM_TO_REG_Selector,
         HI_Write,          // novas saídas
         LO_Write,
         HI_Control,
