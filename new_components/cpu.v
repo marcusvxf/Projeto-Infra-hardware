@@ -92,6 +92,13 @@ module cpu(
     wire [2:0] i_or_d;
     wire [7:0] MemtoReg;
 
+    // Sinais para MULT, DIV, MFHI, MFLO
+    wire [31:0] mult_hi, mult_lo;
+    wire [31:0] div_hi, div_lo;
+    wire div_zero;
+    wire [31:0] HI_out, LO_out;
+    wire HI_Write, LO_Write, HI_Control, LO_Control;
+    wire rst_out;
     // MUXES
 
     mux_regDst M_REG_DST_(
@@ -105,13 +112,13 @@ module cpu(
     mux_mem_to_reg M_MEM_TO_REG_(
         MEM_TO_REG_Selector,
         REG_ALU_OUT_out, // Data 0
-        32'b0, // Data 1 - MDR - não tem na video aula
-        32'b0, // Data 2 - HI_out - não tem na video aula
-        32'b0, // Data 3 - LO_out - não tem na video aula
-        32'b0, // Data 4 - SHIFT_out - não tem na video aula
-        32'b0, // Data 5 - sign_ext_out_1->32 - não tem na video aula
-        32'b0, // Data 6 - sign_ext_out_16->32 - não tem na video aula
-        32'b0, // Data 7 - Merge Bytes Oute - não tem na video aula
+        32'b0,            // Data 1 - MDR
+        HI_out,           // Data 2 - HI_out
+        LO_out,           // Data 3 - LO_out
+        32'b0,            // Data 4 - SHIFT_out
+        32'b0,            // Data 5 - sign_ext_out_1->32
+        32'b0,            // Data 6 - sign_ext_out_16->32
+        32'b0,            // Data 7 - Merge Bytes
         BREG_WRITE_DATA_IN // a saida do mux que vai pro banco de registradores e pra A e B
     );
 
@@ -266,6 +273,65 @@ module cpu(
         RB_to_B
     );
 
+    Registrador A_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
+        RB_to_A, // entrada de A
+        A_out // saida 
+
+    );
+
+    Registrador B_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
+        RB_to_B, // entrada de B
+        B_out // saida 
+    );
+
+    // Em seguida, preciso 
+    //instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
+
+        // --- Novos blocos para MULT/DIV/MFHI/MFLO ---
+    multiplier MULT_inst (
+        A_out,
+        B_out,
+        mult_hi,
+        mult_lo
+    );
+
+    divider DIV_inst (
+        A_out,
+        B_out,
+        div_lo,
+        div_hi,
+        div_zero
+    );
+
+    // Mux para escolher entre resultado do multiplicador e divisor
+    wire [31:0] HI_input, LO_input;
+    assign HI_input = (HI_Control) ? div_hi : mult_hi;
+    assign LO_input = (LO_Control) ? div_lo : mult_lo;
+
+    // Registradores HI e LO
+    Registrador HI_reg (
+        clk,
+        reset,
+        HI_Write,
+        HI_input,
+        HI_out
+    );
+
+    Registrador LO_reg (
+        clk,
+        reset,
+        LO_Write,
+        LO_input,
+        LO_out
+    );
+    // --- Fim dos novos blocos ---
+
     sign_xtend_16_32 SXTND_ (
         OFFSET,
         SXTND_out
@@ -319,6 +385,10 @@ module cpu(
         // reset de saida
         reset,
         MEM_TO_REG_Selector
+        HI_Write,          // novas saídas
+        LO_Write,
+        HI_Control,
+        LO_Control
     );
 
     // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
