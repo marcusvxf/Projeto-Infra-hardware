@@ -151,23 +151,23 @@ module cpu(
 
     // mux_ulaB atualizado com Data_3
     mux_ulaB M_ULA_B_ (
-        .selector(M_ULAB),
-        .Data_0(B_out),
-        .Data_1(SXTND_out),
-        .Data_2(32'd4),
-        .Data_3(immediate_shifted),
-        .Data_out(ULAB_in)
+        M_ULAB,
+        B_out,
+        SXTND_out,
+        32'd4,
+        immediate_shifted,
+        ULAB_in
     );
 
     // mux_data_source atualizado
     mux_data_source M_DATA_SOURCE_ (
-        .selector(MUX_DATA_SOURCE_SELECTOR),
-        .Data_0(A_out),
-        .Data_1(B_out),
-        .Data_2(XCHG_OUT_1),
-        .Data_3(XCHG_OUT_2),
-        .Data_4(byte_merged_data),
-        .Data_out(DATA_DATA_SOURCE_IN)
+        MUX_DATA_SOURCE_SELECTOR,
+        A_out,
+        B_out,
+        XCHG_OUT_1,
+        XCHG_OUT_2,
+        byte_merged_data,
+        DATA_DATA_SOURCE_IN
     );
 
     mux_iord M_IORD_ (
