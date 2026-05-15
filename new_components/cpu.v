@@ -25,6 +25,9 @@ module cpu(
     wire [1:0] RegDst;
     wire Reg_w;
     wire AB_r;
+    wire MDR_W;
+    wire XCHG_CONTROL_1;
+    wire XCHG_CONTROL_2;
 
 
 // Fios de controle com mais de 1 bit 
@@ -78,7 +81,9 @@ module cpu(
     wire [31:0] DATA_DATA_SOURCE_IN;
     wire [31:0] BREG_WRITE_DATA_IN; 
     wire [31:0] PC_IN; 
-
+    wire [31:0] XCHG_OUT_1;
+    wire [31:0] XCHG_OUT_2;
+    wire [31:0] MDR_REG_OUT
 
     // instrução
     wire [5:0] funct;
@@ -186,6 +191,30 @@ module cpu(
         REG_ALU_OUT_out
     );
 
+    Registrador MDR_REG_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        MDR_W, 
+        MEM_to_IR, 
+        MDR_REG_OUT
+    );
+
+    Registrador XCHG_1_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        XCHG_CONTROL_1, 
+        MDR_REG_OUT, 
+        XCHG_OUT_1
+    );
+
+    Registrador XCHG_2_ (
+        clk, // clock - declarado no modulo
+        reset, // reset - declarado no modulo
+        XCHG_CONTROL_2, 
+        MDR_REG_OUT, 
+        XCHG_OUT_2
+    );
+
     //------------------------------------------------
     // COMPONENTES BASE
     Memoria MEM_(
@@ -265,6 +294,9 @@ module cpu(
         AB_w,
         RB_w,
         ALU_OUT_W,
+        MDR_W
+        XCHG_CONTROL_1,
+        XCHG_CONTROL_2,
         ULA_c,
         // SELECTORES DE MUX
         M_WREG,

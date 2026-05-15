@@ -20,6 +20,9 @@ module ctrl_unit(
     output reg    AB_w,
     output reg    RB_w,
     output reg    ALU_OUT_W,
+    output reg MDR_W,
+    output reg XCHG_CONTROL_1;
+    output reg XCHG_CONTROL_2;
     // Controladores com mais de 1 bit
     output reg [2:0]    ULA_c,
     // Controlador pra os multiplexadores  
@@ -105,11 +108,11 @@ always @(posedge clk) begin
             COUNTER = 3'b000;
             MEM_TO_REG_Selector = 3'b000; // Resetar o seletor do mux mem to reg
         end
+        MDR_W = 1'b0;
     end else begin 
 
         case (STATE)
             ST_COMMON: begin
-
                 // Processo de somar PC + 4
                 if(COUNTER == 3'b000 || COUNTER == 3'b001 || COUNTER == 3'b010) begin
                     STATE = ST_COMMON;
@@ -131,7 +134,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
-
+                    MDR_W = 1'b0;
                 end 
                 else if (COUNTER == 3'b011) begin
                     STATE = ST_COMMON;
@@ -152,7 +155,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
-
+                    MDR_W = 1'b0;
                 end 
                 // PC e IR já foram atualizados, agora é hora de preparar os sinais de controle para a próxima instrução 
                 else if (COUNTER == 3'b100 ) begin
@@ -174,6 +177,7 @@ always @(posedge clk) begin
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
+                    MDR_W = 1'b0;
                 end 
                 else if (COUNTER == 3'b101) begin
                     // Inicio das instruções
@@ -220,7 +224,7 @@ always @(posedge clk) begin
                     MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     rst_out = 1'b0; 
                     COUNTER = 3'b000;
-
+                    MDR_W = 1'b0;
                 end
             end
             // Estado de adição, add
@@ -241,6 +245,8 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = COUNTER + 1;
 
                 end
@@ -261,10 +267,13 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
 
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
             end
             ST_SUB: begin
                 if(COUNTER == 3'b000) begin
@@ -283,6 +292,8 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = COUNTER + 1;
 
                 end
@@ -303,9 +314,12 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
             end
             ST_AND: begin
                 if(COUNTER == 3'b000) begin
@@ -324,6 +338,8 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = COUNTER + 1;
                 end
 
@@ -343,9 +359,12 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
             end
 
             // JR
@@ -365,6 +384,8 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = COUNTER + 1;
 
                 end
@@ -383,9 +404,12 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
             end
             // Estado de adição imediata, addi
             ST_ADDI: begin
@@ -405,6 +429,8 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b10;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = COUNTER + 1;
                 end
 
@@ -424,9 +450,81 @@ always @(posedge clk) begin
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b10;
                     rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
+            end
+
+            ST_XCHG: begin
+
+                MEM_TO_REG_Selector = 3'b000;
+                PC_w = 1'b0;
+                IR_w = 1'b0;
+                Reg_w = 1'b0;
+                AB_w = 1'b0;
+                RB_w = 1'b0;    
+                ALU_OUT_W = 1'b0;
+                ULA_c = 3'b000;
+                M_WREG = 1'b0; 
+                M_ULAA = 1'b0;
+                M_ULAB = 2'b00;
+                rst_out = 1'b0;
+                COUNTER = COUNTER + 1;
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+
+                if(COUNTER == 6'b000 && COUNTER == 6'b001 && COUNTER == 6'b010 ) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0010; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MEM_w = 1'b0;
+                    XCHG_CONTROL_1 = 1'b0;
+                    XCHG_CONTROL_2 = 1'b0;
+                end
+                else if(COUNTER == 6'b011) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0011; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MEM_w = 1'b0;
+                    XCHG_CONTROL_1 = 1'b1;
+                    XCHG_CONTROL_2 = 1'b0;
+                end
+                else if(COUNTER == 6'b100 && COUNTER == 6'b101 && COUNTER == 6'b110 ) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0011; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MEM_w = 1'b0;
+                    XCHG_CONTROL_1 = 1'b0;
+                    XCHG_CONTROL_2 = 1'b1;
+                end
+                else if(COUNTER == 6'b111) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0011; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    MEM_w = 1'b0;
+                    XCHG_CONTROL_1 = 1'b0;
+                    XCHG_CONTROL_2 = 1'b1;
+                end
+                // Processo de troca da memoria
+                else if(COUNTER == 6'b1000 && COUNTER == 6'b1001 && COUNTER == 6'b1010 ) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0011; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0010;
+                    MEM_w = 1'b1;
+                    XCHG_CONTROL_1 = 1'b0;
+                    XCHG_CONTROL_2 = 1'b0;
+                end
+                else if(COUNTER == 6'b1011 && COUNTER == 6'b1100 && COUNTER == 6'b1101 ) begin
+                    STATE = ST_XCHG;
+                    MUX_IORD_SELECTOR = 4'b0010; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0011;
+                    MEM_w = 1'b1;
+                    XCHG_CONTROL_1 = 1'b0;
+                    XCHG_CONTROL_2 = 1'b0;
+                end
+
             end
 
             ST_RESET: begin
@@ -446,6 +544,7 @@ always @(posedge clk) begin
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
                 rst_out = 1'b1; // Sinal de reset para o processador
                 COUNTER = 3'b000;
+                MDR_W = 1'b0;
             end
 
         endcase
