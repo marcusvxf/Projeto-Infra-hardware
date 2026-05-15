@@ -36,7 +36,7 @@ module cpu(
 
 // Controladores para os muxes 
 
-    wire        M_WREG; // sinal de controle do mux 3 
+    wire        M_REG_DST_SELECTOR; // sinal de controle do mux 3 
     wire        M_ULAA;
     wire [1:0]  M_ULAB;
     wire [2:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
@@ -95,7 +95,7 @@ module cpu(
     // MUXES
 
     mux_regDst M_REG_DST_(
-        M_WREG,
+        M_REG_DST_SELECTOR,
         RT, // primeira entrada
         OFFSET, // segunda entrada 
         WRITEREG_in // a saida dele 
@@ -310,7 +310,7 @@ module cpu(
         XCHG_CONTROL_2,
         ULA_c,
         // SELECTORES DE MUX
-        M_WREG,
+        M_REG_DST_SELECTOR,
         M_ULAA,
         M_ULAB,
         MUX_DATA_SOURCE_SELECTOR,
