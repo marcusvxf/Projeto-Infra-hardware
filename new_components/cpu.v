@@ -50,6 +50,7 @@ module cpu(
     wire [4:0]    RS;
     wire [4:0]    RT;
     wire [15:0]    OFFSET; // o imediato 
+    wire [4:0]    SHAMT;
 
 // Fio de dados com menos de 32 bits 
     // Write Reg 
@@ -85,12 +86,19 @@ module cpu(
     wire [31:0] XCHG_OUT_2;
     wire [31:0] MDR_REG_OUT;
     wire [31:0] SHIFT_LEFT_J_OUT;
+    wire [31:0] SLL_OUT;
+    wire [31:0] SRA_OUT;
+    wire [31:0] SLT_OUT;
+    wire [31:0] LUI_OUT;
+    wire [31:0] SRAM_OUT;
 
     // instrução
     wire [5:0] funct;
     wire [2:0] ALU_op;
     wire [2:0] i_or_d;
     wire [7:0] MemtoReg;
+
+    assign SHAMT = OFFSET[10:6];
 
     // MUXES
 
@@ -105,12 +113,12 @@ module cpu(
     mux_mem_to_reg M_MEM_TO_REG_(
         MEM_TO_REG_Selector,
         REG_ALU_OUT_out, // Data 0
-        32'b0, // Data 1 - MDR - não tem na video aula
-        32'b0, // Data 2 - HI_out - não tem na video aula
-        32'b0, // Data 3 - LO_out - não tem na video aula
-        32'b0, // Data 4 - SHIFT_out - não tem na video aula
-        32'b0, // Data 5 - sign_ext_out_1->32 - não tem na video aula
-        32'b0, // Data 6 - sign_ext_out_16->32 - não tem na video aula
+        MDR_REG_OUT, // Data 1 - MDR
+        SLL_OUT, // Data 2 - SLL
+        SRA_OUT, // Data 3 - SRA
+        SLT_OUT, // Data 4 - SLT
+        LUI_OUT, // Data 5 - LUI
+        SRAM_OUT, // Data 6 - SRAM
         32'b0, // Data 7 - Merge Bytes Oute - não tem na video aula
         BREG_WRITE_DATA_IN // a saida do mux que vai pro banco de registradores e pra A e B
     );
@@ -126,7 +134,7 @@ module cpu(
         M_ULAB,
         B_out,
         SXTND_out,
-        1'b0,
+        32'b0,
         ULAB_in
     );
 
@@ -226,6 +234,35 @@ module cpu(
         SHIFT_LEFT_J_OUT // jump_addr
     );
 
+    sll SLL_ (
+        B_out,
+        SHAMT,
+        SLL_OUT
+    );
+
+    sra SRA_ (
+        B_out,
+        SHAMT,
+        SRA_OUT
+    );
+
+    slt SLT_ (
+        A_out,
+        B_out,
+        SLT_OUT
+    );
+
+    lui LUI_ (
+        OFFSET,
+        LUI_OUT
+    );
+
+    sram SRAM_ (
+        B_out,
+        MDR_REG_OUT,
+        SRAM_OUT
+    );
+
     //----------------------------------------------------
     // COMPONENTES BASE
     Memoria MEM_(
@@ -285,40 +322,35 @@ module cpu(
     );
 
     ctrl_unit CTRL_(
-        clk,
-        reset,// reset de entrada
-        // flags da ULA
-        Of, // fio de overflow
-        Ng, // negacao
-        Zr, // zero
-        Eq, // igual
-        Gt, // maior
-        Lt, // menor
-        // fim   
-        OPCODE, // opcode
-        OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
-        // sinais de controle pra todos os muxs e todas as unidades do controle
-        PC_w, 
-        MEM_w,
-        IR_w,
-        Reg_w,
-        AB_w,
-        RB_w,
-        ALU_OUT_W,
-        MDR_W
-        XCHG_CONTROL_1,
-        XCHG_CONTROL_2,
-        ULA_c,
-        // SELECTORES DE MUX
-        M_WREG,
-        M_ULAA,
-        M_ULAB,
-        MUX_DATA_SOURCE_SELECTOR,
-        MUX_IORD_SELECTOR,
-        MUX_PC_SOURCE_SELECTOR,
-        // reset de saida
-        reset,
-        MEM_TO_REG_Selector
+        .clk(clk),
+        .reset(reset),
+        .Of(Of),
+        .Ng(Ng),
+        .Zr(Zr),
+        .Eq(Eq),
+        .Gt(Gt),
+        .Lt(Lt),
+        .OPCODE(OPCODE),
+        .OFFSET(OFFSET),
+        .PC_w(PC_w),
+        .MEM_w(MEM_w),
+        .IR_w(IR_w),
+        .Reg_w(Reg_w),
+        .AB_w(AB_w),
+        .RB_w(RB_w),
+        .ALU_OUT_W(ALU_OUT_W),
+        .MDR_W(MDR_W),
+        .XCHG_CONTROL_1(XCHG_CONTROL_1),
+        .XCHG_CONTROL_2(XCHG_CONTROL_2),
+        .ULA_c(ULA_c),
+        .M_WREG(M_WREG),
+        .M_ULAA(M_ULAA),
+        .M_ULAB(M_ULAB),
+        .MUX_DATA_SOURCE_SELECTOR(MUX_DATA_SOURCE_SELECTOR),
+        .MUX_IORD_SELECTOR(MUX_IORD_SELECTOR),
+        .MUX_PC_SOURCE_SELECTOR(MUX_PC_SOURCE_SELECTOR),
+        .rst_out(),
+        .MEM_TO_REG_Selector(MEM_TO_REG_Selector)
     );
 
     // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
