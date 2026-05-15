@@ -223,18 +223,18 @@ module cpu_add(
 
         // --- Novos blocos para MULT/DIV/MFHI/MFLO ---
     multiplier MULT_inst (
-        .A(A_out),
-        .B(B_out),
-        .HI(mult_hi),
-        .LO(mult_lo)
+        A_out,
+        B_out,
+        mult_hi,
+        mult_lo
     );
 
     divider DIV_inst (
-        .A(A_out),
-        .B(B_out),
-        .LO(div_lo),
-        .HI(div_hi),
-        .div_zero(div_zero)
+        A_out,
+        B_out,
+        div_lo,
+        div_hi,
+        div_zero
     );
 
     // Mux para escolher entre resultado do multiplicador e divisor
@@ -244,19 +244,19 @@ module cpu_add(
 
     // Registradores HI e LO
     Registrador HI_reg (
-        .Clk(clk),
-        .Reset(reset),
-        .Load(HI_Write),
-        .Entrada(HI_input),
-        .Saida(HI_out)
+        clk,
+        reset,
+        HI_Write,
+        HI_input,
+        HI_out
     );
 
     Registrador LO_reg (
-        .Clk(clk),
-        .Reset(reset),
-        .Load(LO_Write),
-        .Entrada(LO_input),
-        .Saida(LO_out)
+        clk,
+        reset,
+        LO_Write,
+        LO_input,
+        LO_out
     );
     // --- Fim dos novos blocos ---
 
@@ -265,34 +265,39 @@ module cpu_add(
         SXTND_out
     );
 
-    ctrl_unit CTRL_ (
-        .clk(clk),
-        .reset(reset),
-        .Of(Of),
-        .Ng(Ng),
-        .Zr(Zr),
-        .Eq(Eq),
-        .Gt(Gt),
-        .Lt(Lt),
-        .OPCODE(OPCODE),
-        .OFFSET(OFFSET),
-        .div_zero(div_zero),          // nova entrada
-        .PC_w(PC_w),
-        .MEM_w(MEM_w),
-        .IR_w(IR_w),
-        .Reg_w(Reg_w),
-        .AB_w(AB_w),
-        .RB_w(RB_w),
-        .ULA_c(ULA_c),
-        .M_WREG(M_WREG),
-        .M_ULAA(M_ULAA),
-        .M_ULAB(M_ULAB),
-        .rst_out(rst_out),
-        .MEM_TO_REG_Selector(MEM_TO_REG_Selector),
-        .HI_Write(HI_Write),          // novas saídas
-        .LO_Write(LO_Write),
-        .HI_Control(HI_Control),
-        .LO_Control(LO_Control)
+    ctrl_unit CTRL_(
+        clk,
+        reset,// reset de entrada
+        // flags da ULA
+        Of, // fio de overflow
+        Ng, // negacao
+        Zr, // zero
+        Eq, // igual
+        Gt, // maior
+        Lt, // menor
+        // fim   
+        OPCODE, // opcode
+        OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
+        // sinais de controle pra todos os muxs e todas as unidades do controle
+        PC_w, 
+        MEM_w,
+        IR_w,
+        Reg_w,
+        AB_w,
+        RB_w,
+        //
+        ULA_c,
+        M_WREG,
+        M_ULAA,
+        M_ULAB,
+
+        // reset de saida
+        reset,
+        MEM_TO_REG_Selector
+        HI_Write,          // novas saídas
+        LO_Write,
+        HI_Control,
+        LO_Control
     );
 
     // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
