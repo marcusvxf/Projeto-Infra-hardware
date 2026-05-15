@@ -57,6 +57,7 @@ parameter ST_JUMP = 4'b1000; // Novo estado para JUMP
 parameter R_TYPE = 6'b000000;
 parameter ADDI = 6'b001000;
 parameter RESET = 6'b111111;
+parameter JUMP = 6'b000010;
 
 initial begin
     rst_out = 1'b1; // Sinal de reset para o processador
