@@ -83,7 +83,8 @@ module cpu(
     wire [31:0] PC_IN; 
     wire [31:0] XCHG_OUT_1;
     wire [31:0] XCHG_OUT_2;
-    wire [31:0] MDR_REG_OUT
+    wire [31:0] MDR_REG_OUT;
+    wire [31:0] SHIFT_LEFT_J_OUT;
 
     // instrução
     wire [5:0] funct;
@@ -151,7 +152,7 @@ module cpu(
         MUX_PC_SOURCE_SELECTOR, // controle do mux pc source
         ULA_out, // Data 0 - resultado da ULA
         REG_ALU_OUT_out, // Data 1 - resultado da ULA registrado
-        PC_out, 
+        SHIFT_LEFT_J_OUT, 
         32'b0, // exceptions
         PC_IN // a saida do mux que vai pro PC
     );
@@ -216,6 +217,16 @@ module cpu(
     );
 
     //------------------------------------------------
+    // SHIFT LEFT
+    calc_j_shift_left_2 SHIFT_LEFT_CALC_J_ (
+        RS, // instr_25_21
+        RT, // instr_20_16
+        OFFSET, // instr_15_0
+        PC_out, // pc_atual
+        SHIFT_LEFT_J_OUT // jump_addr
+    );
+
+    //----------------------------------------------------
     // COMPONENTES BASE
     Memoria MEM_(
         ADDRESS_IORD_IN, // tem o endereco que é PC  

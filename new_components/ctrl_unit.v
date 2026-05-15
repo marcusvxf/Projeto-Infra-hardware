@@ -52,7 +52,7 @@ parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a difere
 parameter ST_AND = 4'b0101; // Novo estado para AND
 parameter ST_JR = 4'b0110; // Novo estado para JR
 parameter ST_XCHG = 4'b0111; // Novo estado para XCHG
-
+parameter ST_JUMP = 4'b1000; // Novo estado para JUMP
 // Opcode
 parameter R_TYPE = 6'b000000;
 parameter ADDI = 6'b001000;
@@ -206,6 +206,9 @@ always @(posedge clk) begin
                         end
                         RESET: begin
                             STATE = ST_RESET;
+                        end
+                        JUMP: begin
+                            STATE = ST_JUMP;
                         end
                     endcase
                     PC_w = 1'b0; 
@@ -524,6 +527,28 @@ always @(posedge clk) begin
                     XCHG_CONTROL_1 = 1'b0;
                     XCHG_CONTROL_2 = 1'b0;
                 end
+
+            end
+            ST_JUMP: begin
+               
+                STATE = ST_COMMON;
+                MUX_IORD_SELECTOR = 4'b0000; 
+                MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                MUX_PC_SOURCE_SELECTOR = 4'b0010; // Controla o mux para selecionar a saída do SHIFT_LEFT_J_OUT como fonte para o PC
+                PC_w = 1'b1; // Escreve o endereço de destino no PC
+                MEM_w = 1'b0;
+                IR_w = 1'b0;
+                Reg_w = 1'b0;
+                AB_w = 1'b0;
+                RB_w = 1'b0;
+                ALU_OUT_W = 1'b0;
+                ULA_c = 3'b000; 
+                M_WREG = 1'b0; 
+                M_ULAA = 1'b0;
+                M_ULAB = 2'b00;
+                rst_out = 1'b0; 
+                COUNTER = 3'b000; 
+                MDR_W = 1'b0;
 
             end
 
