@@ -46,7 +46,7 @@ module ctrl_unit(
 
 // Variaveis
 reg [3:0] STATE = 4'b0000; // estado da maquina de estados atualizar ao adicionar estados
-reg [3:0] COUNTER;
+reg [5:0] COUNTER;
 reg [5:0] funct; // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
 
 // Estados principais da maquina 
