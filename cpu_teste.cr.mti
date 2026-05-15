@@ -1,11 +1,11 @@
-{D:/downloads/Componentes do Projeto/new_components/cpu_add.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu_add.v}
+{D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module cpu
+-- Compiling module mux_mem_to_reg
 
 Top level modules:
-	cpu
+	mux_mem_to_reg
 
-} {} {}} {D:/downloads/Componentes do Projeto/new_components/cpu.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu.v}
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/cpu_add.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/cpu_add.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module cpu_add
 
@@ -29,6 +29,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity Ula32
 -- Compiling architecture behavioral of Ula32
 
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_data_source.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_data_source.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_data_source
+
+Top level modules:
+	mux_data_source
+
 } {} {}} {D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -47,12 +54,31 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity RegDesloc
 -- Compiling architecture behavioral_arch of RegDesloc
 
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_pc_source
+
+Top level modules:
+	mux_pc_source
+
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module mux_ulaA
 
 Top level modules:
 	mux_ulaA
+
+} {} {}} {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Compiling package ram_constants
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package LPM_COMPONENTS
+-- Loading package ram_constants
+-- Compiling entity Memoria
+-- Compiling architecture behavioral_arch of Memoria
 
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -68,17 +94,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	sign_xtend_16_32
 
-} {} {}} {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Memoria.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
--- Loading package STANDARD
--- Compiling package ram_constants
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package LPM_COMPONENTS
--- Loading package ram_constants
--- Compiling entity Memoria
--- Compiling architecture behavioral_arch of Memoria
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_iord.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_iord.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mux_iord
+
+Top level modules:
+	mux_iord
 
 } {} {}} {D:/downloads/Componentes do Projeto/given_components/Registrador.vhd} {1 {vcom -work work -2002 -explicit -stats=none {D:/downloads/Componentes do Projeto/given_components/Registrador.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
@@ -94,13 +115,6 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 
 Top level modules:
 	mux_regDst
-
-} {} {}} {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v}
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module ctrl_unit
-
-Top level modules:
-	ctrl_unit
 
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
