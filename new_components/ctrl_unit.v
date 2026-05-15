@@ -22,8 +22,8 @@ module ctrl_unit(
     output reg    RB_w,
     output reg    ALU_OUT_W,
     output reg MDR_W,
-    output reg XCHG_CONTROL_1;
-    output reg XCHG_CONTROL_2;
+    output reg XCHG_CONTROL_1,
+    output reg XCHG_CONTROL_2,
     // Controladores com mais de 1 bit
     output reg [2:0]    ULA_c,
     // Controlador pra os multiplexadores  
@@ -62,12 +62,20 @@ parameter ST_JR = 4'b0110; // Novo estado para JR
 
 parameter ST_XCHG = 4'b0111; // Novo estado para XCHG
 parameter ST_JUMP = 4'b1000; // Novo estado para JUMP
+<<<<<<< HEAD
+parameter ST_SLL = 4'b1001;
+parameter ST_SRA = 4'b1010;
+parameter ST_SLT = 4'b1011;
+parameter ST_SRAM = 4'b1100;
+parameter ST_LUI = 4'b1101;
+=======
 parameter ST_JAL = 4'b1001; // Novo estado para JAL
   
 parameter ST_MULT = 4'b1010;
 parameter ST_DIV  = 4'b1011;
 parameter ST_MFHI = 4'b1100;
 parameter ST_MFLO = 4'b1101;
+>>>>>>> b42d7d8b1734c750c12a74432644b3755cfca350
 // Opcode
 parameter ADD   = 6'b100000;
 parameter SUB   = 6'b100010;
@@ -81,7 +89,12 @@ parameter DIV   = 6'b011010;   // funct 26
 parameter MFHI  = 6'b010000;   // funct 16
 parameter MFLO  = 6'b010010;   // funct 18
 parameter JUMP = 6'b000010;
+<<<<<<< HEAD
+parameter SRAM = 6'b000001;
+parameter LUI = 6'b001111;
+=======
 parameter JAL = 6'b000011;
+>>>>>>> b42d7d8b1734c750c12a74432644b3755cfca350
 
 initial begin
     rst_out = 1'b1; // Sinal de reset para o processador
@@ -231,6 +244,15 @@ always @(posedge clk) begin
                             else if (funct == 6'b001000) begin // Verifica se é a instrução JR (funct = 8)
                                 STATE = ST_JR; // Implementar o estado de JR
                             end
+                            else if (funct == 6'b000000) begin // SLL
+                                STATE = ST_SLL;
+                            end
+                            else if (funct == 6'b000011) begin // SRA
+                                STATE = ST_SRA;
+                            end
+                            else if (funct == 6'b101010) begin // SLT
+                                STATE = ST_SLT;
+                            end
                             else if (funct == 6'b000101) begin // Verifica se é a instrução BNE (funct = 5)
                                 STATE = ST_XCHG; // Implementar o estado de XCHG, que será reutilizado para a instrução BNE, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
                             end
@@ -245,8 +267,16 @@ always @(posedge clk) begin
                         JUMP: begin
                             STATE = ST_JUMP;
                         end
+<<<<<<< HEAD
+                        SRAM: begin
+                            STATE = ST_SRAM;
+                        end
+                        LUI: begin
+                            STATE = ST_LUI;
+=======
                         JAL: begin
                             STATE = ST_JAL;
+>>>>>>> b42d7d8b1734c750c12a74432644b3755cfca350
                         end
                     endcase
                     PC_w = 1'b0; 
@@ -497,6 +527,257 @@ always @(posedge clk) begin
                 end
                 MUX_PC_SOURCE_SELECTOR = 4'b0000;
                 MDR_W = 1'b0;
+            end
+
+            ST_SLL: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b010;
+
+                    STATE = ST_SLL;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b0;
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b010;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = 3'b000;
+                    MDR_W = 1'b0;
+                end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+            end
+
+            ST_SRA: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b011;
+
+                    STATE = ST_SRA;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b0;
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b011;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = 3'b000;
+                    MDR_W = 1'b0;
+                end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+            end
+
+            ST_SLT: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b100;
+
+                    STATE = ST_SLT;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b0;
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b100;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b1;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = 3'b000;
+                    MDR_W = 1'b0;
+                end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+            end
+
+            ST_LUI: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b101;
+
+                    STATE = ST_LUI;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b0;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b0;
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b101;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b0;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0000; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = 3'b000;
+                    MDR_W = 1'b0;
+                end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+            end
+
+            ST_SRAM: begin
+                if(COUNTER == 3'b000) begin
+                    MEM_TO_REG_Selector = 3'b110;
+
+                    STATE = ST_SRAM;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b1;
+                    ULA_c = 3'b001;
+                    M_WREG = 1'b0;
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b10;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0001; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b0;
+                end
+                else if(COUNTER == 3'b001) begin
+                    MEM_TO_REG_Selector = 3'b110;
+
+                    STATE = ST_SRAM;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b0;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b001;
+                    M_WREG = 1'b0;
+                    M_ULAA = 1'b1;
+                    M_ULAB = 2'b10;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0001; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = COUNTER + 1;
+                    MDR_W = 1'b1;
+                end
+                else if(COUNTER == 3'b010) begin
+                    MEM_TO_REG_Selector = 3'b110;
+
+                    STATE = ST_COMMON;
+                    PC_w = 1'b0;
+                    MEM_w = 1'b0;
+                    IR_w = 1'b0;
+                    Reg_w = 1'b1;
+                    AB_w = 1'b0;
+                    RB_w = 1'b0;
+                    ALU_OUT_W = 1'b0;
+                    ULA_c = 3'b000;
+                    M_WREG = 1'b0;
+                    M_ULAA = 1'b0;
+                    M_ULAB = 2'b00;
+                    rst_out = 1'b0;
+                    MUX_IORD_SELECTOR = 4'b0001; 
+                    MUX_DATA_SOURCE_SELECTOR = 4'b0000;
+                    COUNTER = 3'b000;
+                    MDR_W = 1'b0;
+                end
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
             end
 
             ST_XCHG: begin

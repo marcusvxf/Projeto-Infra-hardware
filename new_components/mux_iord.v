@@ -1,5 +1,5 @@
 module mux_iord(
-    input wire selector,
+    input wire [3:0] selector,
     input wire [31:0] Data_0,
     input wire [31:0] Data_1,
     input wire [31:0] Data_2,

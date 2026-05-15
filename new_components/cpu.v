@@ -50,6 +50,7 @@ module cpu(
     wire [4:0]    RS;
     wire [4:0]    RT;
     wire [15:0]    OFFSET; // o imediato 
+    wire [4:0]    SHAMT;
 
 // Fio de dados com menos de 32 bits 
     // Write Reg 
@@ -85,12 +86,19 @@ module cpu(
     wire [31:0] XCHG_OUT_2;
     wire [31:0] MDR_REG_OUT;
     wire [31:0] SHIFT_LEFT_J_OUT;
+    wire [31:0] SLL_OUT;
+    wire [31:0] SRA_OUT;
+    wire [31:0] SLT_OUT;
+    wire [31:0] LUI_OUT;
+    wire [31:0] SRAM_OUT;
 
     // instrução
     wire [5:0] funct;
     wire [2:0] ALU_op;
     wire [2:0] i_or_d;
     wire [7:0] MemtoReg;
+
+    assign SHAMT = OFFSET[10:6];
 
     // Sinais para MULT, DIV, MFHI, MFLO
     wire [31:0] mult_hi, mult_lo;
@@ -133,7 +141,7 @@ module cpu(
         M_ULAB,
         B_out,
         SXTND_out,
-        1'b0,
+        32'b0,
         ULAB_in
     );
 
@@ -231,6 +239,35 @@ module cpu(
         OFFSET, // instr_15_0
         PC_out, // pc_atual
         SHIFT_LEFT_J_OUT // jump_addr
+    );
+
+    sll SLL_ (
+        B_out,
+        SHAMT,
+        SLL_OUT
+    );
+
+    sra SRA_ (
+        B_out,
+        SHAMT,
+        SRA_OUT
+    );
+
+    slt SLT_ (
+        A_out,
+        B_out,
+        SLT_OUT
+    );
+
+    lui LUI_ (
+        OFFSET,
+        LUI_OUT
+    );
+
+    sram SRAM_ (
+        B_out,
+        MDR_REG_OUT,
+        SRAM_OUT
     );
 
     //----------------------------------------------------
