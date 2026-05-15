@@ -10,7 +10,6 @@ module cpu(
     wire    Gt;
     wire    Lt;
 
-
 // Controles de 1 bit
 
     wire PC_w;
@@ -58,7 +57,7 @@ module cpu(
     // DECLARAR OS SINAIS DE CONTROLE
     // Control wires 
 
-    wire AB_w; // contrle de escrita de A e B ao mesmo tempo
+    wire AB_w; // controle de escrita de A e B ao mesmo tempo
     wire RB_w; // controle de escrita do banco de registradores, pra ler os dados e passar pra A e B
     
     // DECLARAR OS PC_w, ULA_out, PC_out 
@@ -72,7 +71,7 @@ module cpu(
     wire [31:0] RB_to_A; // sinal de dado
     wire [31:0] RB_to_B;  // sinal de dado
     wire [31:0] A_out;  // saida de B
-    wire [31:0] B_out;  // saia de A  
+    wire [31:0] B_out;  // saida de A  
     wire [31:0] REG_ALU_OUT_out;
     wire [31:0] SXTND_out;
     wire [31:0] ULAA_in;
@@ -99,6 +98,27 @@ module cpu(
     wire [31:0] HI_out, LO_out;
     wire HI_Write, LO_Write, HI_Control, LO_Control;
     wire rst_out;
+
+    // ------------------------------------------------------------------
+    // NOVOS FIOS PARA PARTE 4
+    // ------------------------------------------------------------------
+    wire [31:0] immediate_shifted;
+    wire        branch_taken;
+    wire [1:0]  byte_offset;
+    wire [31:0] byte_merged_data;
+
+    assign immediate_shifted = {SXTND_out[29:0], 2'b00};  // shift left 2 do imediato
+    assign branch_taken = (OPCODE == 6'b000100) ? Eq :     // BEQ
+                          (OPCODE == 6'b000101) ? ~Eq :    // BNE
+                          1'b0;
+
+    assign byte_offset = ADDRESS_IORD_IN[1:0];   // endereço calculado pela ULA
+    assign byte_merged_data = (byte_offset == 2'b00) ? {MDR_REG_OUT[31:8], B_out[7:0]} :
+                              (byte_offset == 2'b01) ? {MDR_REG_OUT[31:16], B_out[7:0], MDR_REG_OUT[7:0]} :
+                              (byte_offset == 2'b10) ? {MDR_REG_OUT[31:24], B_out[7:0], MDR_REG_OUT[15:0]} :
+                              {B_out[7:0], MDR_REG_OUT[23:0]};
+    // ------------------------------------------------------------------
+
     // MUXES
 
     mux_regDst M_REG_DST_(
@@ -129,21 +149,25 @@ module cpu(
         ULAA_in
     );
 
+    // mux_ulaB atualizado com Data_3
     mux_ulaB M_ULA_B_ (
-        M_ULAB,
-        B_out,
-        SXTND_out,
-        1'b0,
-        ULAB_in
+        .selector(M_ULAB),
+        .Data_0(B_out),
+        .Data_1(SXTND_out),
+        .Data_2(32'd4),
+        .Data_3(immediate_shifted),
+        .Data_out(ULAB_in)
     );
 
+    // mux_data_source atualizado
     mux_data_source M_DATA_SOURCE_ (
-        MUX_DATA_SOURCE_SELECTOR,
-        A_out,
-        32'b0, // Data 1 - MERGEBYTE
-        32'b0, // Data 2 - XCHG1 
-        32'b0, // Data 3 - XCHG2  
-        DATA_DATA_SOURCE_IN
+        .selector(MUX_DATA_SOURCE_SELECTOR),
+        .Data_0(A_out),
+        .Data_1(B_out),
+        .Data_2(XCHG_OUT_1),
+        .Data_3(XCHG_OUT_2),
+        .Data_4(byte_merged_data),
+        .Data_out(DATA_DATA_SOURCE_IN)
     );
 
     mux_iord M_IORD_ (
@@ -158,7 +182,7 @@ module cpu(
     mux_pc_source M_PC_SOURCE_ (
         MUX_PC_SOURCE_SELECTOR, // controle do mux pc source
         ULA_out, // Data 0 - resultado da ULA
-        REG_ALU_OUT_out, // Data 1 - resultado da ULA registrado
+        A_out, // Data 1 - valor de $rs (para JR)   // CORRIGIDO: antes era REG_ALU_OUT_out
         SHIFT_LEFT_J_OUT, 
         32'b0, // exceptions
         PC_IN // a saida do mux que vai pro PC
@@ -171,7 +195,7 @@ module cpu(
         clk, // clock - declarado no modulo
         reset, // reset - declarado no modulo
         PC_w, // pc write pra escrita 
-        ULA_out, // unico sinal q entra pra pc e a saida da ula
+        PC_IN, // CORRIGIDO: antes era ULA_out
         PC_out // saida 
     );
 
@@ -273,10 +297,7 @@ module cpu(
         RB_to_B
     );
 
-    // Em seguida, preciso 
-    //instanciar os mux de entrada da ULA, e pra isso devo instanciar o SIGN_EXTEND
-
-        // --- Novos blocos para MULT/DIV/MFHI/MFLO ---
+    // --- MULT/DIV/MFHI/MFLO ---
     multiplier MULT_inst (
         A_out,
         B_out,
@@ -292,12 +313,10 @@ module cpu(
         div_zero
     );
 
-    // Mux para escolher entre resultado do multiplicador e divisor
     wire [31:0] HI_input, LO_input;
     assign HI_input = (HI_Control) ? div_hi : mult_hi;
     assign LO_input = (LO_Control) ? div_lo : mult_lo;
 
-    // Registradores HI e LO
     Registrador HI_reg (
         clk,
         reset,
@@ -313,7 +332,6 @@ module cpu(
         LO_input,
         LO_out
     );
-    // --- Fim dos novos blocos ---
 
     sign_xtend_16_32 SXTND_ (
         OFFSET,
@@ -347,6 +365,7 @@ module cpu(
         OPCODE, // opcode
         OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
         // sinais de controle pra todos os muxs e todas as unidades do controle
+        div_zero,
         PC_w, 
         MEM_w,
         IR_w,
@@ -358,7 +377,6 @@ module cpu(
         XCHG_CONTROL_1,
         XCHG_CONTROL_2,
         ULA_c,
-        // SELECTORES DE MUX
         M_REG_DST_SELECTOR,
         M_ULAA,
         M_ULAB,
@@ -367,12 +385,11 @@ module cpu(
         MUX_PC_SOURCE_SELECTOR,     
         rst_out,   
         MEM_TO_REG_Selector,
-        HI_Write,          // novas saídas
+        HI_Write,
         LO_Write,
         HI_Control,
         LO_Control
     );
-
-    // Agora, instnaciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
-
+    // Agora, instanciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
+ 
 endmodule
