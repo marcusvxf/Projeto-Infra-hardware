@@ -1,4 +1,11 @@
-{D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v}
+{D:/downloads/Componentes do Projeto/new_components/multiplier.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/multiplier.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module multiplier
+
+Top level modules:
+	multiplier
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module mux_mem_to_reg
 
@@ -54,6 +61,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity RegDesloc
 -- Compiling architecture behavioral_arch of RegDesloc
 
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module calc_j_shift_left_2
+
+Top level modules:
+	calc_j_shift_left_2
+
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module mux_pc_source
@@ -80,19 +94,19 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity Memoria
 -- Compiling architecture behavioral_arch of Memoria
 
-} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v}
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module mux_ulaB
-
-Top level modules:
-	mux_ulaB
-
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module sign_xtend_16_32
 
 Top level modules:
 	sign_xtend_16_32
+
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/divider.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/divider.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module divider
+
+Top level modules:
+	divider
 
 } {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_iord.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_iord.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -116,11 +130,11 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	mux_regDst
 
-} {} {}} {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/mux_pcSource.v}
+} {} {}} {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v} {1 {vlog -work work -stats=none {D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module mux_PcSource
+-- Compiling module ctrl_unit
 
 Top level modules:
-	mux_PcSource
+	ctrl_unit
 
 } {} {}}
