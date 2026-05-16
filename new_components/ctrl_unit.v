@@ -420,7 +420,7 @@ always @(posedge clk) begin
                     MEM_TO_REG_Selector = 3'b000;
 
                     STATE = ST_COMMON;
-                    PC_w = 1'b0;
+                    PC_w = 1'b1;
                     MEM_w = 1'b0;
                     IR_w = 1'b0;
                     Reg_w = 1'b0;
