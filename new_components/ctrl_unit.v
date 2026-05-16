@@ -21,7 +21,7 @@ module ctrl_unit(
     output reg    XCHG_CONTROL_1,
     output reg    XCHG_CONTROL_2,
     output reg [2:0]    ULA_c,
-    output reg    M_REG_DST_SELECTOR, // RegDst
+    output reg  [1:0]   M_REG_DST_SELECTOR, // RegDst
     output reg    M_ULAA,
     output reg  [1:0] M_ULAB,
     output reg  [3:0] MUX_DATA_SOURCE_SELECTOR, // controle do mux data source
@@ -93,7 +93,7 @@ always @(posedge clk) begin
             RB_w = 1'b0;
             ULA_c = 3'b000;
             ALU_OUT_W = 1'b0;
-            M_REG_DST_SELECTOR = 1'b0;
+            M_REG_DST_SELECTOR = 2'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
             rst_out = 1'b1; // Sinal de reset para o processador
@@ -113,7 +113,7 @@ always @(posedge clk) begin
             RB_w = 1'b0;
             ALU_OUT_W = 1'b0;
             ULA_c = 3'b000;
-            M_REG_DST_SELECTOR = 1'b0;
+            M_REG_DST_SELECTOR = 2'b0;
             M_ULAA = 1'b0;
             M_ULAB = 2'b00;
 
@@ -139,7 +139,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001;
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
                     rst_out = 1'b0; 
@@ -160,7 +160,7 @@ always @(posedge clk) begin
                      RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar PC + 4
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b01;
                     rst_out = 1'b0; 
@@ -182,7 +182,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; 
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0; 
@@ -243,7 +243,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; 
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b0;
                     M_ULAA = 1'b0;
                     M_ULAB = 2'b00;
                     MUX_IORD_SELECTOR = 4'b0000; 
@@ -268,7 +268,7 @@ always @(posedge clk) begin
                     RB_w = 1'b1;
                     ALU_OUT_W = 1'b1;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -290,7 +290,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -315,7 +315,7 @@ always @(posedge clk) begin
                     RB_w = 1'b1;    
                     ALU_OUT_W = 1'b1;
                     ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -337,7 +337,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0; 
                     ULA_c = 3'b010; // Controla a ULA para subtrair os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -361,7 +361,7 @@ always @(posedge clk) begin
                     RB_w = 1'b1;
                     ALU_OUT_W = 1'b1;
                     ULA_c = 3'b011; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -382,7 +382,7 @@ always @(posedge clk) begin
                     RB_w = 1'b0;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b011; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -407,7 +407,7 @@ always @(posedge clk) begin
                     AB_w = 1'b0;  
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -427,7 +427,7 @@ always @(posedge clk) begin
                     AB_w = 1'b0;  
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b000; // Controla a ULA para subtrair os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b00;
                     rst_out = 1'b0;
@@ -452,7 +452,7 @@ always @(posedge clk) begin
                     RB_w = 1'b1;
                     ALU_OUT_W = 1'b1;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b1; 
+                    M_REG_DST_SELECTOR = 2'b1; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b10;
                     rst_out = 1'b0;
@@ -473,7 +473,7 @@ always @(posedge clk) begin
                     RB_w = 1'b1;
                     ALU_OUT_W = 1'b0;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 1'b0; 
+                    M_REG_DST_SELECTOR = 2'b0; 
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b10;
                     rst_out = 1'b0;
@@ -495,7 +495,7 @@ always @(posedge clk) begin
                 RB_w = 1'b0;    
                 ALU_OUT_W = 1'b0;
                 ULA_c = 3'b000;
-                M_REG_DST_SELECTOR = 1'b0; 
+                M_REG_DST_SELECTOR = 2'b0; 
                 M_ULAA = 1'b0;
                 M_ULAB = 2'b00;
                 rst_out = 1'b0;
@@ -567,7 +567,7 @@ always @(posedge clk) begin
                 RB_w = 1'b0;
                 ALU_OUT_W = 1'b0;
                 ULA_c = 3'b000; 
-                M_REG_DST_SELECTOR = 1'b0; 
+                M_REG_DST_SELECTOR = 2'b0; 
                 M_ULAA = 1'b0;
                 M_ULAB = 2'b00;
                 rst_out = 1'b0; 
@@ -582,16 +582,19 @@ always @(posedge clk) begin
                     STATE = ST_JAL;
                     M_ULAA = 1'b0; 
                     ALU_OUT_W = 1'b1; 
+                    Reg_w = 1'b0;
                     COUNTER = COUNTER + 1;
                     MUX_PC_SOURCE_SELECTOR = 4'b0000;
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b10;
                     MEM_TO_REG_Selector = 3'b000;
                 end
-                else if(COUNTER == 3'b011) begin
+                else if(COUNTER == 6'b000010) begin
                     STATE = ST_COMMON;
+                    ALU_OUT_W = 1'b0;
+                    Reg_w = 1'b1;
                     COUNTER = 3'b000;
                     MUX_PC_SOURCE_SELECTOR = 4'b0010;
-                    M_REG_DST_SELECTOR = 1'b0;
+                    M_REG_DST_SELECTOR = 2'b10;
                     MEM_TO_REG_Selector = 0'b0;
                 end
                 MUX_IORD_SELECTOR = 4'b0000; 
@@ -599,10 +602,9 @@ always @(posedge clk) begin
                 PC_w = 1'b0; // Escreve o endereço de destino no PC
                 MEM_w = 1'b0;
                 IR_w = 1'b0;
-                Reg_w = 1'b0;
+                
                 AB_w = 1'b0;
                 RB_w = 1'b0;
-                ALU_OUT_W = 1'b0;
                 ULA_c = 3'b000;  
                 M_ULAA = 1'b0;
                 M_ULAB = 2'b00;
@@ -621,7 +623,7 @@ always @(posedge clk) begin
                     // manter outros sinais em valores padrão
                     PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                     AB_w = 1'b0; RB_w = 1'b0;
-                    M_REG_DST_SELECTOR = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
+                    M_REG_DST_SELECTOR = 2'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
                     STATE = ST_MULT;
                     COUNTER = COUNTER + 1;
                 end else if (COUNTER == 3'b001) begin
@@ -646,7 +648,7 @@ always @(posedge clk) begin
                     MEM_TO_REG_Selector = 3'b000;
                     PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                     AB_w = 1'b0; RB_w = 1'b0;
-                    M_REG_DST_SELECTOR = 1'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
+                    M_REG_DST_SELECTOR = 2'b0; M_ULAA = 1'b0; M_ULAB = 2'b00;
                     STATE = ST_DIV;
                     COUNTER = COUNTER + 1;
                 end else if (COUNTER == 3'b001) begin
@@ -668,7 +670,7 @@ always @(posedge clk) begin
                 HI_Write = 1'b0;
                 LO_Write = 1'b0;
                 Reg_w = 1'b1;
-                M_REG_DST_SELECTOR = 1'b1;            // destino = rd (campo 15:11)
+                M_REG_DST_SELECTOR = 2'b1;            // destino = rd (campo 15:11)
                 MEM_TO_REG_Selector = 3'b010;  // seleciona HI_out no mux
                 PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                 AB_w = 1'b0; RB_w = 1'b0;
@@ -682,7 +684,7 @@ always @(posedge clk) begin
                 HI_Write = 1'b0;
                 LO_Write = 1'b0;
                 Reg_w = 1'b1;
-                M_REG_DST_SELECTOR = 1'b1;
+                M_REG_DST_SELECTOR = 2'b1;
                 MEM_TO_REG_Selector = 3'b011;  // LO_out
                 PC_w = 1'b0; MEM_w = 1'b0; IR_w = 1'b0;
                 AB_w = 1'b0; RB_w = 1'b0;
@@ -701,7 +703,7 @@ always @(posedge clk) begin
                 AB_w = 1'b0;
                 RB_w = 1'b0;
                 ULA_c = 3'b000;
-                M_REG_DST_SELECTOR = 1'b0;
+                M_REG_DST_SELECTOR = 2'b0;
                 M_ULAA = 1'b0;
                 M_ULAB = 2'b00;
                 MUX_IORD_SELECTOR = 4'b0000; 

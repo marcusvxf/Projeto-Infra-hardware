@@ -35,7 +35,7 @@ module cpu(
 
 // Controladores para os muxes 
 
-    wire        M_REG_DST_SELECTOR; // sinal de controle do mux 3 
+    wire [1:0]  M_REG_DST_SELECTOR; // sinal de controle do mux 3 
     wire        M_ULAA;
     wire [1:0]  M_ULAB;
     wire [3:0]  MEM_TO_REG_Selector; // controle do mux mem to reg
