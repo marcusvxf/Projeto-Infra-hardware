@@ -151,12 +151,12 @@ module cpu(
 
     // mux_ulaB atualizado com Data_3
     mux_ulaB M_ULA_B_ (
-        .selector(M_ULAB),
-        .Data_0(B_out),
-        .Data_1(SXTND_out),
-        .Data_2(32'd4),
-        .Data_3(immediate_shifted),
-        .Data_out(ULAB_in)
+        M_ULAB,
+        B_out,
+        32'd4,
+        SXTND_out,
+        immediate_shifted,
+        ULAB_in
     );
 
     // mux_data_source atualizado
@@ -354,17 +354,14 @@ module cpu(
     ctrl_unit CTRL_(
         clk,
         reset,// reset de entrada
-        // flags da ULA
         Of, // fio de overflow
         Ng, // negacao
         Zr, // zero
         Eq, // igual
         Gt, // maior
         Lt, // menor
-        // fim   
         OPCODE, // opcode
         OFFSET, // offset - imediato | funct - pra instruções R-type, o opcode é 000000, então o funct é que determina a operação
-        // sinais de controle pra todos os muxs e todas as unidades do controle
         div_zero,
         PC_w, 
         MEM_w,
@@ -383,7 +380,7 @@ module cpu(
         MUX_DATA_SOURCE_SELECTOR,
         MUX_IORD_SELECTOR,
         MUX_PC_SOURCE_SELECTOR,     
-        rst_out,   
+        reset,   
         MEM_TO_REG_Selector,
         HI_Write,
         LO_Write,

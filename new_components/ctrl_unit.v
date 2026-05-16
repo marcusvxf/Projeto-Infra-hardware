@@ -1,19 +1,15 @@
 module ctrl_unit( 
     input wire      clk,
     input wire    reset,
-    // flags da ULA
     input wire    Of, // fio de overflow
     input wire    Ng, // negacao
     input wire    Zr, // zero
     input wire    Eq, // igual
     input wire    Gt, // maior
     input wire    Lt, // menor
-    // ------------------------------------------
-
     input wire  [5:0]    OPCODE,
     input wire  [15:0]    OFFSET, // para instruções R-type, o opcode é 000000, então o funct é que determina a operação
     input wire div_zero, // exceção div por zero
-    // Controllers com 1 bit - W => WRITE
     output reg    PC_w, 
     output reg    MEM_w,
     output reg    IR_w,
@@ -24,20 +20,15 @@ module ctrl_unit(
     output reg    MDR_W,
     output reg    XCHG_CONTROL_1,
     output reg    XCHG_CONTROL_2,
-    // Controladores com mais de 1 bit
     output reg [2:0]    ULA_c,
-    // Controlador pra os multiplexadores  
     output reg    M_REG_DST_SELECTOR, // RegDst
     output reg    M_ULAA,
     output reg  [1:0] M_ULAB,
     output reg  [3:0] MUX_DATA_SOURCE_SELECTOR, // controle do mux data source
     output reg  [3:0] MUX_IORD_SELECTOR, // controle do mux iord
     output reg  [3:0] MUX_PC_SOURCE_SELECTOR, // controle do mux pc source
-    // Funciona de acordo com o Clock - sincronamente com o clock
     output reg    rst_out,
-
     output reg [3:0] MEM_TO_REG_Selector, // controle do mux mem to reg
-    // saidas mult/div
     output reg HI_Write,
     output reg LO_Write,
     output reg HI_Control,
@@ -57,8 +48,6 @@ parameter ST_RESET = 4'b0011;
 parameter ST_SUB = 4'b0100; // Reutilizando o mesmo estado do ADD, pois a diferença entre as instruções R-type é apenas o controle da ULA, que é determinado pelo funct
 parameter ST_AND = 4'b0101; // Novo estado para AND
 parameter ST_JR = 4'b0110; // Novo estado para JR
-
-
 
 parameter ST_XCHG = 4'b0111; // Novo estado para XCHG
 parameter ST_JUMP = 4'b1000; // Novo estado para JUMP
@@ -134,31 +123,6 @@ always @(posedge clk) begin
         end
         MDR_W = 1'b0;
     end else begin 
-
-            PC_w <= 1'b0;
-            MEM_w <= 1'b0;
-            IR_w <= 1'b0;
-            Reg_w <= 1'b0;
-            AB_w <= 1'b0;
-            RB_w <= 1'b0;
-            ALU_OUT_W <= 1'b0;
-            MDR_W <= 1'b0;
-            XCHG_CONTROL_1 <= 1'b0;
-            XCHG_CONTROL_2 <= 1'b0;
-            ULA_c <= 3'b000;
-            M_REG_DST_SELECTOR <= 1'b0;
-            M_ULAA <= 1'b0;
-            M_ULAB <= 2'b00;
-            MUX_DATA_SOURCE_SELECTOR <= 4'b0000;
-            MUX_IORD_SELECTOR <= 4'b0000;
-            MUX_PC_SOURCE_SELECTOR <= 4'b0000;
-            rst_out <= 1'b0;
-            MEM_TO_REG_Selector <= 3'b000;
-            HI_Write <= 1'b0;
-            LO_Write <= 1'b0;
-            HI_Control <= 1'b0;
-            LO_Control <= 1'b0;
-
             case (STATE)
             ST_COMMON: begin
                 // Processo de somar PC + 4
