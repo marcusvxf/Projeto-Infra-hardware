@@ -141,7 +141,7 @@ always @(posedge clk) begin
                     ULA_c = 3'b001;
                     M_REG_DST_SELECTOR = 1'b0;
                     M_ULAA = 1'b0;
-                    M_ULAB = 2'b01;
+                    M_ULAB = 2'b10;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -162,7 +162,7 @@ always @(posedge clk) begin
                     ULA_c = 3'b001; // Controla a ULA para somar PC + 4
                     M_REG_DST_SELECTOR = 1'b0;
                     M_ULAA = 1'b0;
-                    M_ULAB = 2'b01;
+                    M_ULAB = 2'b10;
                     rst_out = 1'b0; 
                     COUNTER = COUNTER + 1;
                     MEM_TO_REG_Selector = 3'b000;
@@ -176,7 +176,7 @@ always @(posedge clk) begin
                     MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     PC_w = 1'b0; 
                     MEM_w = 1'b0;
-                    IR_w = 1'b1; 
+                    IR_w = 1'b0; 
                     Reg_w = 1'b0;
                     AB_w = 1'b1;
                     RB_w = 1'b0;
