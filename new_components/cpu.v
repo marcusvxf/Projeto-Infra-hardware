@@ -97,7 +97,12 @@ module cpu(
     wire div_zero;
     wire [31:0] HI_out, LO_out;
     wire HI_Write, LO_Write, HI_Control, LO_Control;
+    wire mult_start;
+    wire mult_ready;
     wire rst_out;
+    wire proc_reset;
+
+    assign proc_reset = reset | rst_out;
 
     // ------------------------------------------------------------------
     // NOVOS FIOS PARA PARTE 4
@@ -117,6 +122,14 @@ module cpu(
                               (byte_offset == 2'b01) ? {MDR_REG_OUT[31:16], B_out[7:0], MDR_REG_OUT[7:0]} :
                               (byte_offset == 2'b10) ? {MDR_REG_OUT[31:24], B_out[7:0], MDR_REG_OUT[15:0]} :
                               {B_out[7:0], MDR_REG_OUT[23:0]};
+
+    // LB: byte da palavra em MDR conforme byte menos significativo do endereço (alinhamento little-endian na palavra)
+    wire [7:0] lb_byte;
+    assign lb_byte = (REG_ALU_OUT_out[1:0] == 2'b00) ? MDR_REG_OUT[7:0] :
+                      (REG_ALU_OUT_out[1:0] == 2'b01) ? MDR_REG_OUT[15:8] :
+                      (REG_ALU_OUT_out[1:0] == 2'b10) ? MDR_REG_OUT[23:16] : MDR_REG_OUT[31:24];
+    wire [31:0] lb_sext_data;
+    assign lb_sext_data = {{24{lb_byte[7]}}, lb_byte};
     // ------------------------------------------------------------------
 
     // MUXES
@@ -131,14 +144,14 @@ module cpu(
 
     mux_mem_to_reg M_MEM_TO_REG_(
         MEM_TO_REG_Selector,
-        REG_ALU_OUT_out, // Data 0
-        32'b0,            // Data 1 - MDR
+        REG_ALU_OUT_out, // Data 0 - ULA / ALU_OUT
+        MDR_REG_OUT,      // Data 1 - MDR (LW)
         HI_out,           // Data 2 - HI_out
         LO_out,           // Data 3 - LO_out
-        32'b0,            // Data 4 - SHIFT_out
-        32'b0,            // Data 5 - sign_ext_out_1->32
-        32'b0,            // Data 6 - sign_ext_out_16->32
-        32'b0,            // Data 7 - Merge Bytes
+        PC_out,           // Data 4 - endereço de retorno (JAL): PC após fetch = próxima instrução
+        32'b0,            // Data 5 - reservado
+        32'b0,            // Data 6 - reservado
+        lb_sext_data,     // Data 7 - LB com extensão de sinal
         BREG_WRITE_DATA_IN // a saida do mux que vai pro banco de registradores e pra A e B
     );
 
@@ -193,7 +206,7 @@ module cpu(
 
     Registrador PC_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         PC_w, // pc write pra escrita 
         PC_IN, // CORRIGIDO: antes era ULA_out
         PC_out // saida 
@@ -201,7 +214,7 @@ module cpu(
 
     Registrador A_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
         RB_to_A, // entrada de A
         A_out // saida 
@@ -209,7 +222,7 @@ module cpu(
 
     Registrador B_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         AB_w, // como vou escrever em A e B ao mesmo tempo chamo de AB
         RB_to_B, // entrada de B
         B_out // saida 
@@ -217,7 +230,7 @@ module cpu(
 
     Registrador ALU_OUT_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         ALU_OUT_W, 
         ULA_out, 
         REG_ALU_OUT_out
@@ -225,7 +238,7 @@ module cpu(
 
     Registrador MDR_REG_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         MDR_W, 
         MEM_to_IR, 
         MDR_REG_OUT
@@ -233,7 +246,7 @@ module cpu(
 
     Registrador XCHG_1_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         XCHG_CONTROL_1, 
         MDR_REG_OUT, 
         XCHG_OUT_1
@@ -241,7 +254,7 @@ module cpu(
 
     Registrador XCHG_2_ (
         clk, // clock - declarado no modulo
-        reset, // reset - declarado no modulo
+        proc_reset,
         XCHG_CONTROL_2, 
         MDR_REG_OUT, 
         XCHG_OUT_2
@@ -274,7 +287,7 @@ module cpu(
     Instr_Reg IR_ (
         // fios
         clk,    
-        reset,
+        proc_reset,
         IR_w, // sinal pra dizer se vai escreve ou n 
         MEM_to_IR,    // entrada - mem to ir
         OPCODE, // Instr31_26
@@ -286,7 +299,7 @@ module cpu(
 
     Banco_reg REG_BASE_(
         clk,
-        reset,
+        proc_reset,
         Reg_w,// Reg Write - sinal de controle 
         RS,// read reg 1 - rs 
         RT,// read reg 2 - rt     
@@ -299,10 +312,14 @@ module cpu(
 
     // --- MULT/DIV/MFHI/MFLO ---
     multiplier MULT_inst (
-        A_out,
-        B_out,
-        mult_hi,
-        mult_lo
+        .clk   (clk),
+        .reset (proc_reset),
+        .start (mult_start),
+        .A     (A_out),
+        .B     (B_out),
+        .HI    (mult_hi),
+        .LO    (mult_lo),
+        .ready (mult_ready)
     );
 
     divider DIV_inst (
@@ -319,7 +336,7 @@ module cpu(
 
     Registrador HI_reg (
         clk,
-        reset,
+        proc_reset,
         HI_Write,
         HI_input,
         HI_out
@@ -327,7 +344,7 @@ module cpu(
 
     Registrador LO_reg (
         clk,
-        reset,
+        proc_reset,
         LO_Write,
         LO_input,
         LO_out
@@ -380,12 +397,14 @@ module cpu(
         MUX_DATA_SOURCE_SELECTOR,
         MUX_IORD_SELECTOR,
         MUX_PC_SOURCE_SELECTOR,     
-        reset,   
+        rst_out,
         MEM_TO_REG_Selector,
         HI_Write,
         LO_Write,
         HI_Control,
-        LO_Control
+        LO_Control,
+        mult_start,
+        mult_ready
     );
     // Agora, instanciar a Unidade de Controle, dai eu seleciono todos os fios que vou usar nela
  
