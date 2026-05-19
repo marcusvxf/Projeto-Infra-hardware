@@ -440,19 +440,21 @@ always @(posedge clk) begin
             end
             // Estado de adição imediata, addi
             ST_ADDI: begin
+                MUX_PC_SOURCE_SELECTOR = 4'b0000;
+                MDR_W = 1'b0;
                 if(COUNTER == 3'b000) begin
                     MEM_TO_REG_Selector = 3'b000;
-
+                    M_REG_DST_SELECTOR = 2'b1;
                     STATE = ST_ADDI;
                     PC_w = 1'b0;
                     MEM_w = 1'b0;
                     IR_w = 1'b0;
-                    Reg_w = 1'b1;
+                    Reg_w = 1'b0;
                     AB_w = 1'b0;
                     RB_w = 1'b1;
                     ALU_OUT_W = 1'b1;
                     ULA_c = 3'b001; // Controla a ULA para somar os operandos
-                    M_REG_DST_SELECTOR = 2'b1; 
+                     
                     M_ULAA = 1'b1;
                     M_ULAB = 2'b10;
                     rst_out = 1'b0;
@@ -481,8 +483,7 @@ always @(posedge clk) begin
                     MUX_DATA_SOURCE_SELECTOR = 4'b0000;
                     COUNTER = 3'b000; // Volta para o estado comum após a execução da instrução
                 end
-                MUX_PC_SOURCE_SELECTOR = 4'b0000;
-                MDR_W = 1'b0;
+                
             end
 
             ST_XCHG: begin
@@ -583,6 +584,7 @@ always @(posedge clk) begin
                     M_ULAA = 1'b0; 
                     ALU_OUT_W = 1'b1; 
                     Reg_w = 1'b0;
+                    PC_w = 1'b0; // Escreve o endereço de destino no PC
                     COUNTER = COUNTER + 1;
                     MUX_PC_SOURCE_SELECTOR = 4'b0000;
                     M_REG_DST_SELECTOR = 2'b10;
@@ -590,7 +592,8 @@ always @(posedge clk) begin
                 end
                 else if(COUNTER == 6'b000010) begin
                     STATE = ST_COMMON;
-                    ALU_OUT_W = 1'b0;
+                    ALU_OUT_W = 1'b1;
+                    PC_w = 1'b1; // Escreve o endereço de destino no PC
                     Reg_w = 1'b1;
                     COUNTER = 3'b000;
                     MUX_PC_SOURCE_SELECTOR = 4'b0010;
@@ -599,7 +602,7 @@ always @(posedge clk) begin
                 end
                 MUX_IORD_SELECTOR = 4'b0000; 
                 MUX_DATA_SOURCE_SELECTOR = 4'b0000;
-                PC_w = 1'b0; // Escreve o endereço de destino no PC
+                
                 MEM_w = 1'b0;
                 IR_w = 1'b0;
                 
