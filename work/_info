@@ -15,7 +15,7 @@ Z0 w1777460001
 Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 1371
+!i122 1571
 Z4 dD:/downloads/Componentes do Projeto
 Z5 8D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd
 Z6 FD:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd
@@ -25,9 +25,9 @@ V:adHbk0Ym0TAKYW83J5Y[3
 !s100 hZ46CT_BzQl8j]02_Vf=o2
 Z7 OV;C;2020.1;71
 32
-Z8 !s110 1778894076
+Z8 !s110 1779061334
 !i10b 1
-Z9 !s108 1778894075.000000
+Z9 !s108 1779061334.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd|
 Z11 !s107 D:/downloads/Componentes do Projeto/given_components/Banco_reg.vhd|
 !i113 1
@@ -38,7 +38,7 @@ R1
 R2
 R3
 DEx4 work 9 banco_reg 0 22 :adHbk0Ym0TAKYW83J5Y[3
-!i122 1371
+!i122 1571
 l93
 L85 34
 VY7l=BkTbhRVIWWGL4mMo60
@@ -54,7 +54,7 @@ R11
 R12
 R13
 vcalc_j_shift_left_2
-Z14 !s110 1778894080
+Z14 !s110 1779061339
 !i10b 1
 !s100 8`aAe1GgcJ[D[kMVmnDBI1
 Z15 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -64,43 +64,43 @@ R4
 w1778805846
 8D:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v
 FD:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v
-!i122 1388
+!i122 1588
 L0 1 12
 Z17 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z18 !s108 1778894080.000000
+Z18 !s108 1779061339.000000
 !s107 D:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/calc_j_shift_left_2.v|
 !i113 1
 Z19 o-work work
 Z20 tCvgOpt 0
 vcpu
-Z21 !s110 1778894079
+Z21 !s110 1779061337
 !i10b 1
 !s100 ><_nDP?4eTZc4LcVBVFUB1
 R15
 I_A=Sgm0XYlcSdE]hgh@j10
 R16
 R4
-w1778893159
+w1779048873
 8D:/downloads/Componentes do Projeto/new_components/cpu.v
 FD:/downloads/Componentes do Projeto/new_components/cpu.v
-!i122 1383
+!i122 1583
 L0 1 392
 R17
 r1
 !s85 0
 31
-Z22 !s108 1778894079.000000
+Z22 !s108 1779061337.000000
 !s107 D:/downloads/Componentes do Projeto/new_components/cpu.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/cpu.v|
 !i113 1
 R19
 R20
 vcpu_add
-Z23 !s110 1778894077
+Z23 !s110 1779061336
 !i10b 1
 !s100 g?6_d9BldLnZ`;;CKYNUg0
 R15
@@ -110,31 +110,31 @@ R4
 w1778801189
 8D:/downloads/Componentes do Projeto/new_components/cpu_add.v
 FD:/downloads/Componentes do Projeto/new_components/cpu_add.v
-!i122 1377
+!i122 1577
 L0 1 258
 R17
 r1
 !s85 0
 31
-Z24 !s108 1778894077.000000
+Z24 !s108 1779061336.000000
 !s107 D:/downloads/Componentes do Projeto/new_components/cpu_add.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/cpu_add.v|
 !i113 1
 R19
 R20
 vctrl_unit
-Z25 !s110 1778894078
+R23
 !i10b 1
-!s100 hM>g<ej;SzkNF4N@ek65<1
+!s100 VHKd2Tgf;d0S@7aKg<hk_0
 R15
-I??g;E=NoBCeZfP:JQ3je71
+I1GNGa]edl;z<cdIEzAcD41
 R16
 R4
-w1778894072
+w1779061320
 8D:/downloads/Componentes do Projeto/new_components/ctrl_unit.v
 FD:/downloads/Componentes do Projeto/new_components/ctrl_unit.v
-!i122 1378
-L0 1 723
+!i122 1578
+L0 1 726
 R17
 r1
 !s85 0
@@ -153,11 +153,11 @@ R15
 IW=oUY_9]iD3RHSci2h<zn2
 R16
 R4
-Z26 w1778885573
+Z25 w1778885573
 8D:/downloads/Componentes do Projeto/new_components/divider.v
 FD:/downloads/Componentes do Projeto/new_components/divider.v
-!i122 1389
-Z27 L0 2 14
+!i122 1589
+Z26 L0 2 14
 R17
 r1
 !s85 0
@@ -172,10 +172,10 @@ Einstr_reg
 R0
 R2
 R3
-!i122 1372
+!i122 1572
 R4
-Z28 8D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd
-Z29 FD:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd
+Z27 8D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd
+Z28 FD:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd
 l0
 L42 1
 VAfV1kYS402dnLRiFO;Z7_2
@@ -184,9 +184,9 @@ R7
 32
 R8
 !i10b 1
-Z30 !s108 1778894076.000000
-Z31 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd|
-Z32 !s107 D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd|
+R9
+Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd|
+Z30 !s107 D:/downloads/Componentes do Projeto/given_components/Instr_Reg.vhd|
 !i113 1
 R12
 R13
@@ -194,7 +194,7 @@ Abehavioral_arch
 R2
 R3
 DEx4 work 9 instr_reg 0 22 AfV1kYS402dnLRiFO;Z7_2
-!i122 1372
+!i122 1572
 l59
 L56 32
 VTD836jU:>9m^d?0ed1C0O3
@@ -203,72 +203,72 @@ R7
 32
 R8
 !i10b 1
+R9
+R29
 R30
-R31
-R32
 !i113 1
 R12
 R13
 Ememoria
 R0
-Z33 DPx4 work 13 ram_constants 0 22 fM5VG7Uh1aeMYE9LkAJ3B1
-Z34 DPx3 lpm 14 lpm_components 0 22 ZZ?0`GZD@?:kcFM0gmf[@1
+Z31 DPx4 work 13 ram_constants 0 22 fM5VG7Uh1aeMYE9LkAJ3B1
+Z32 DPx3 lpm 14 lpm_components 0 22 ZZ?0`GZD@?:kcFM0gmf[@1
 R1
 R2
 R3
-!i122 1373
+!i122 1573
 R4
-Z35 8D:/downloads/Componentes do Projeto/given_components/Memoria.vhd
-Z36 FD:/downloads/Componentes do Projeto/given_components/Memoria.vhd
+Z33 8D:/downloads/Componentes do Projeto/given_components/Memoria.vhd
+Z34 FD:/downloads/Componentes do Projeto/given_components/Memoria.vhd
 l0
 L78 1
 VmkofzOhH?Zn05DR;dY2OP0
 !s100 gT17f6X9FdmoGl_MYE;1W0
 R7
 32
-R8
+Z35 !s110 1779061335
 !i10b 1
-R30
-Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Memoria.vhd|
-Z38 !s107 D:/downloads/Componentes do Projeto/given_components/Memoria.vhd|
+R9
+Z36 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Memoria.vhd|
+Z37 !s107 D:/downloads/Componentes do Projeto/given_components/Memoria.vhd|
 !i113 1
 R12
 R13
 Abehavioral_arch
-R33
-R34
+R31
+R32
 R1
 R2
 R3
 DEx4 work 7 memoria 0 22 mkofzOhH?Zn05DR;dY2OP0
-!i122 1373
+!i122 1573
 l122
 L90 104
 VN2]@ZD`;iA[GGoMB>`Vln1
 !s100 33@Cb8V_dh1DC=G=4KkG53
 R7
 32
-R8
+R35
 !i10b 1
-R30
+R9
+R36
 R37
-R38
 !i113 1
 R12
 R13
 vmultiplier
-!s110 1778894081
+!s110 1779061340
 !i10b 1
 !s100 `<e9NM61W_06BgU^k=fd[2
 R15
 IkfeeRn62KZUbz5YeUA1Zk0
 R16
 R4
-R26
+R25
 8D:/downloads/Componentes do Projeto/new_components/multiplier.v
 FD:/downloads/Componentes do Projeto/new_components/multiplier.v
-!i122 1390
-R27
+!i122 1590
+R26
 R17
 r1
 !s85 0
@@ -280,17 +280,17 @@ R18
 R19
 R20
 vmux_data_source
-R21
+Z38 !s110 1779061338
 !i10b 1
 !s100 LAgCMgeNM^N2Zd476<<NR3
 R15
 IV7]j;R^ill<MZ;mgX?KZo3
 R16
 R4
-R26
+R25
 8D:/downloads/Componentes do Projeto/new_components/mux_data_source.v
 FD:/downloads/Componentes do Projeto/new_components/mux_data_source.v
-!i122 1384
+!i122 1584
 Z39 L0 1 20
 R17
 r1
@@ -303,7 +303,7 @@ R22
 R19
 R20
 vmux_iord
-R21
+R38
 !i10b 1
 !s100 S3b_j;]C@bbAM61JFcRWe1
 R15
@@ -313,20 +313,20 @@ R4
 w1778891862
 8D:/downloads/Componentes do Projeto/new_components/mux_iord.v
 FD:/downloads/Componentes do Projeto/new_components/mux_iord.v
-!i122 1385
+!i122 1585
 L0 1 18
 R17
 r1
 !s85 0
 31
-R22
+Z40 !s108 1779061338.000000
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_iord.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_iord.v|
 !i113 1
 R19
 R20
 vmux_mem_to_reg
-R14
+R38
 !i10b 1
 !s100 Xk;2=V[MQNVZmDJHTKj;80
 R15
@@ -336,13 +336,13 @@ R4
 w1777827828
 8D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v
 FD:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v
-!i122 1386
+!i122 1586
 L0 1 29
 R17
 r1
 !s85 0
 31
-R22
+R40
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_mem_to_reg.v|
 !i113 1
@@ -356,16 +356,16 @@ R15
 IfgCdR;2R9^ie]:=F4?KmG1
 R16
 R4
-R26
+R25
 8D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v
 FD:/downloads/Componentes do Projeto/new_components/mux_pc_source.v
-!i122 1387
+!i122 1587
 L0 1 13
 R17
 r1
 !s85 0
 31
-R18
+R40
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_pc_source.v|
 !i113 1
@@ -396,7 +396,7 @@ R19
 R20
 nmux_@pc@source
 vmux_regDst
-R25
+R23
 !i10b 1
 !s100 3A`hL;g8VAOcBH4gAUj7G1
 R15
@@ -406,13 +406,13 @@ R4
 w1778892797
 8D:/downloads/Componentes do Projeto/new_components/mux_regDst.v
 FD:/downloads/Componentes do Projeto/new_components/mux_regDst.v
-!i122 1379
+!i122 1579
 L0 1 10
 R17
 r1
 !s85 0
 31
-Z40 !s108 1778894078.000000
+R24
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_regDst.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_regDst.v|
 !i113 1
@@ -420,7 +420,7 @@ R19
 R20
 nmux_reg@dst
 vmux_ulaA
-R25
+R21
 !i10b 1
 !s100 ]@Vljj<l:JnTj=QUYdXTS3
 R15
@@ -430,13 +430,13 @@ R4
 w1777751417
 8D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v
 FD:/downloads/Componentes do Projeto/new_components/mux_ulaA.v
-!i122 1380
+!i122 1580
 L0 1 9
 R17
 r1
 !s85 0
 31
-R40
+R24
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_ulaA.v|
 !i113 1
@@ -444,23 +444,23 @@ R19
 R20
 nmux_ula@a
 vmux_ulaB
-R25
+R21
 !i10b 1
-!s100 ^0Gzz>mMm>OO`<5g:4DVo3
+!s100 BzT?WIKMR6n694<TUSJN?1
 R15
-IDaZYP^>?GzET5gN5LEe4;3
+Iz[`FUh3fQ1F4n=AUMJnle1
 R16
 R4
-w1778891593
+w1779051855
 8D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v
 FD:/downloads/Componentes do Projeto/new_components/mux_ulaB.v
-!i122 1381
+!i122 1581
 R39
 R17
 r1
 !s85 0
 31
-R40
+R22
 !s107 D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/mux_ulaB.v|
 !i113 1
@@ -468,22 +468,22 @@ R19
 R20
 nmux_ula@b
 Pram_constants
-!i122 1373
+!i122 1573
 R0
 R4
-R35
-R36
+R33
+R34
 l0
 L58 1
 VfM5VG7Uh1aeMYE9LkAJ3B1
 !s100 EZlbReQ5cH1;cnZ4g48d:0
 R7
 32
-R8
+R35
 !i10b 1
-R30
+R9
+R36
 R37
-R38
 !i113 1
 R12
 R13
@@ -492,7 +492,7 @@ R0
 R1
 R2
 R3
-!i122 1374
+!i122 1574
 R4
 Z41 8D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd
 Z42 FD:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd
@@ -502,11 +502,11 @@ Vn^6CTT0G6[TK<hMLAOdVE0
 !s100 h6S4QO2lP<LeKEbf`2MFI0
 R7
 32
-R8
+R35
 !i10b 1
-R30
-Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd|
-Z44 !s107 D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd|
+Z43 !s108 1779061335.000000
+Z44 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd|
+Z45 !s107 D:/downloads/Componentes do Projeto/given_components/RegDesloc.vhd|
 !i113 1
 R12
 R13
@@ -515,18 +515,18 @@ R1
 R2
 R3
 DEx4 work 9 regdesloc 0 22 n^6CTT0G6[TK<hMLAOdVE0
-!i122 1374
+!i122 1574
 l107
 L102 39
 VEPn;3Dggf]^J6z<;P^o712
 !s100 8QCFN_T9_07koG]I6XRQS3
 R7
 32
-R8
+R35
 !i10b 1
-R30
 R43
 R44
+R45
 !i113 1
 R12
 R13
@@ -534,21 +534,21 @@ Eregistrador
 R0
 R2
 R3
-!i122 1375
+!i122 1575
 R4
-Z45 8D:/downloads/Componentes do Projeto/given_components/Registrador.vhd
-Z46 FD:/downloads/Componentes do Projeto/given_components/Registrador.vhd
+Z46 8D:/downloads/Componentes do Projeto/given_components/Registrador.vhd
+Z47 FD:/downloads/Componentes do Projeto/given_components/Registrador.vhd
 l0
 L53 1
 VD=`aG^VOPEDP69ifb8G;52
 !s100 ^e8=Z<CbNTLXR@XGZJMQo3
 R7
 32
-R23
+R35
 !i10b 1
-R30
-Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Registrador.vhd|
-Z48 !s107 D:/downloads/Componentes do Projeto/given_components/Registrador.vhd|
+R43
+Z48 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/Registrador.vhd|
+Z49 !s107 D:/downloads/Componentes do Projeto/given_components/Registrador.vhd|
 !i113 1
 R12
 R13
@@ -556,18 +556,18 @@ Abehavioral_arch
 R2
 R3
 DEx4 work 11 registrador 0 22 D=`aG^VOPEDP69ifb8G;52
-!i122 1375
+!i122 1575
 l66
 L65 19
 V<kVfXRZJUh40ja<<lN_3:3
 !s100 EXKKzlBL1ARAk5TCN4`Vg2
 R7
 32
-R23
+R35
 !i10b 1
-R30
-R47
+R43
 R48
+R49
 !i113 1
 R12
 R13
@@ -582,13 +582,13 @@ R4
 w1777578582
 8D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v
 FD:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v
-!i122 1382
+!i122 1582
 L0 1 7
 R17
 r1
 !s85 0
 31
-R40
+R22
 !s107 D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/downloads/Componentes do Projeto/new_components/sign_xtend_16_32.v|
 !i113 1
@@ -599,10 +599,10 @@ R0
 R1
 R2
 R3
-!i122 1376
+!i122 1576
 R4
-Z49 8D:/downloads/Componentes do Projeto/given_components/ula32.vhd
-Z50 FD:/downloads/Componentes do Projeto/given_components/ula32.vhd
+Z50 8D:/downloads/Componentes do Projeto/given_components/ula32.vhd
+Z51 FD:/downloads/Componentes do Projeto/given_components/ula32.vhd
 l0
 L70 1
 V7;A2o1dNA?ebYYPhMG1c70
@@ -611,9 +611,9 @@ R7
 32
 R23
 !i10b 1
-R24
-Z51 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/ula32.vhd|
-Z52 !s107 D:/downloads/Componentes do Projeto/given_components/ula32.vhd|
+R43
+Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|D:/downloads/Componentes do Projeto/given_components/ula32.vhd|
+Z53 !s107 D:/downloads/Componentes do Projeto/given_components/ula32.vhd|
 !i113 1
 R12
 R13
@@ -622,7 +622,7 @@ R1
 R2
 R3
 DEx4 work 5 ula32 0 22 7;A2o1dNA?ebYYPhMG1c70
-!i122 1376
+!i122 1576
 l96
 L86 143
 VhDUi_mNh2[oS[:2HcEDN>0
@@ -631,9 +631,9 @@ R7
 32
 R23
 !i10b 1
-R24
-R51
+R43
 R52
+R53
 !i113 1
 R12
 R13
