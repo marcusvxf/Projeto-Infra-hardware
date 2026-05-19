@@ -14,7 +14,7 @@ module mux_ulaB(
     assign A1 = (selector[1:0] == 2'b00) ? 32'd4 : Data_0;
     // vai selecionar o bit mais a esquerda 
     assign Data_out = (selector[1:0] == 2'b01) ? 32'd4 :
-                      (selector[1:0] == 2'b00) ? Data_1 : 
+                      (selector[1:0] == 2'b00) ? Data_0 : 
                       (selector[1:0] == 2'b10) ? Data_2 : Data_3;
 
 endmodule
